@@ -1,6 +1,9 @@
 #ifndef TRAPEZOIDALMAP_H
 #define TRAPEZOIDALMAP_H
 #include "trapezoid.h"
+#include <vector>
+#include <cg3/geometry/point2.h>
+#include <cg3/geometry/polygon2.h>
 
 class TrapezoidalMap{
 
@@ -16,9 +19,9 @@ public:
     void addSegment(const cg3::Segment2d & segment);
     void addTrapezoid(const Trapezoid & trapezoid);
 
-    Node getPointByPosition(const int Position);
-    Node getSegmentByPosition(const int Position);
-    Node getTrapezoidByPosition(const int Position);
+    cg3::Point2d getPointByPosition(const int Position);
+    cg3::Segment2d getSegmentByPosition(const int Position);
+    Trapezoid getTrapezoidByPosition(const int Position);
 };
 
 #endif // TRAPEZOIDALMAP_H

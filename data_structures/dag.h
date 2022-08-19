@@ -1,6 +1,7 @@
 #ifndef DAG_H
 #define DAG_H
 #include "node.h"
+#include <vector>
 
 class Dag{
 
