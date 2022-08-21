@@ -1,7 +1,6 @@
 #ifndef DAG_H
 #define DAG_H
 #include "node.h"
-#include <vector>
 
 class Dag{
 
@@ -12,8 +11,8 @@ private:
 public:
     Dag();
 
-    Node getNodeByPosition(const int Position);
-    Node getRoot();
+    Node& getNodeByPosition(const size_t position);
+    Node& getRoot();
     void addNode(const Node & newNode);
 
 };

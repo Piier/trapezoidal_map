@@ -1,6 +1,10 @@
 #ifndef NODE_H
 #define NODE_H
-
+#include <stddef.h>
+#include <stddef.h>
+#include <vector>
+#include <cg3/geometry/point2.h>
+#include <cg3/geometry/polygon2.h>
 enum Type{
     Vertex,
     Edge,
@@ -11,21 +15,21 @@ class Node{
 
 private:
     Type type;
-    int leftChild, rightChild;
-    int element;
+    size_t leftChild, rightChild;
+    size_t element;
 
 public:
-    Node(const int element, Type type);
+    Node(const size_t e, Type t);
 
-    Type getType();
-    int getLeftChild();
-    int getRightChild();
-    int getElement();
+    Type getType() const;
+    size_t getLeftChild() const;
+    size_t getRightChild() const;
+    size_t getElement() const;
 
-    void setElement(const int element);
-    void setType(Type element);
-    void setLeftChild(const int leftChild);
-    void setRightChild(const int rightChild);
+    void setElement(const size_t newElement);
+    void setType(Type newType);
+    void setLeftChild(const size_t newLeftChild);
+    void setRightChild(const size_t newRightChild);
 };
 
 #endif // NODE_H
