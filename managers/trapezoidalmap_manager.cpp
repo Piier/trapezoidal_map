@@ -199,11 +199,8 @@ void TrapezoidalMapManager::addSegmentToTrapezoidalMap(const cg3::Segment2d& seg
 
     //#####################################################################
 
+    Algorithms::addSegmentToMap(trapezoidalMap, dag, segment);
 
-
-    //You can delete this line after you implement the algorithm: it is
-    //just needed to suppress the unused-variable warning
-    CG3_SUPPRESS_WARNING(segment);
 }
 
 /**

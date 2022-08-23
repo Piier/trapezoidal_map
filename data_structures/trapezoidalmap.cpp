@@ -1,4 +1,5 @@
 #include "trapezoidalmap.h"
+#define BOUNDINGBOX 1e+6
 
 /**
  * @brief TrapezoidalMap::TrapezoidalMap Constructor
@@ -7,6 +8,14 @@ TrapezoidalMap::TrapezoidalMap(){
     pointsTable=std::vector<cg3::Point2d>();
     segmentsTable=std::vector<cg3::Segment2d>();
     trapezoidsTable=std::vector<Trapezoid>();
+
+    pointsTable.push_back(cg3::Point2d(-BOUNDINGBOX,BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(BOUNDINGBOX,BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(-BOUNDINGBOX,-BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX));
+    segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,BOUNDINGBOX)));
+    segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,-BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX)));
+    trapezoidsTable.push_back(Trapezoid(true));
 }
 
 /**

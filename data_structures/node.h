@@ -6,9 +6,9 @@
 #include <cg3/geometry/point2.h>
 #include <cg3/geometry/polygon2.h>
 enum Type{
-    Vertex,
-    Edge,
-    Face
+    T_Point,
+    T_Segment,
+    T_Trapezoid
 };
 
 class Node{

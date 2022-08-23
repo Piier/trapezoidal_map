@@ -12,6 +12,7 @@ private:
 
 public:
     Trapezoid();
+    Trapezoid(bool bb);
 
     size_t getLeft() const;
     size_t getRight() const;

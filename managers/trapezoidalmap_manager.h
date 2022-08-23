@@ -11,6 +11,9 @@
 #include <cg3/geometry/segment2.h>
 
 #include "drawables/drawable_trapezoidalmap_dataset.h"
+#include "data_structures/trapezoidalmap.h"
+#include "data_structures/dag.h"
+#include "utils/algorithms.h"
 
 namespace Ui {
     class TrapezoidalMapManager;
@@ -57,8 +60,8 @@ private:
     //---------------------------------------------------------------------
     //Declare your attributes here
 
-
-
+    TrapezoidalMap trapezoidalMap = TrapezoidalMap();
+    Dag dag = Dag();
 
     //#####################################################################
 

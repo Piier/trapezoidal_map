@@ -5,6 +5,7 @@
  */
 Dag::Dag(){
     dag=std::vector<Node>();
+    dag.push_back(Node(0,Type::T_Trapezoid));
 }
 
 /**

@@ -1,4 +1,8 @@
 #include "trapezoid.h"
+#define BB_LEFTP 2
+#define BB_RIGHTP 1
+#define BB_TOP 0
+#define BB_BOTTOM 1
 
 /**
  * @brief Trapezoid::Trapezoid Constructor
@@ -15,6 +19,21 @@ Trapezoid::Trapezoid(){
     deleted=false;
 }
 
+/**
+ * @brief Trapezoid::Trapezoid Constructor for the bounding box
+ * @param bb A flag used for overloading
+ */
+Trapezoid::Trapezoid(bool bb){
+    leftp=BB_LEFTP;
+    rightp=BB_RIGHTP;
+    top=BB_TOP;;
+    bottom=BB_BOTTOM;
+    adjBottomLeft=SIZE_MAX;
+    adjBottomRight=SIZE_MAX;
+    adjTopLeft=SIZE_MAX;
+    adjTopRight=SIZE_MAX;
+    deleted=false;
+}
 
 //Getters
 size_t Trapezoid::getLeft() const{
