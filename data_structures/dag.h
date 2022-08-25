@@ -13,7 +13,8 @@ public:
 
     Node& getNodeByPosition(const size_t position);
     Node& getRoot();
-    void addNode(const Node & newNode);
+    size_t addNode(Node &newNode);
+    size_t getSize();
 
 };
 

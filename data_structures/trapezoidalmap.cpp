@@ -21,25 +21,31 @@ TrapezoidalMap::TrapezoidalMap(){
 /**
  * @brief TrapezoidalMap::addPoint Add a point to the trapezoidal map
  * @param point The point to add
+ * @return The position in the map
  */
-void TrapezoidalMap::addPoint(const cg3::Point2d &point){
+size_t TrapezoidalMap::addPoint(const cg3::Point2d &point){
     pointsTable.push_back(point);
+    return pointsTable.size()-1;
 }
 
 /**
  * @brief TrapezoidalMap::addSegment Add a segment to the trapezoidal map
  * @param segment The segment to add
+ * @return The position in the map
  */
-void TrapezoidalMap::addSegment(const cg3::Segment2d &segment){
+size_t TrapezoidalMap::addSegment(const cg3::Segment2d &segment){
     segmentsTable.push_back(segment);
+    return segmentsTable.size()-1;
 }
 
 /**
  * @brief TrapezoidalMap::addTrapezoid Add a trapezoid to the trapezoidal map
  * @param trapezoid The trapezoid to add
+ * @return The position in the map
  */
-void TrapezoidalMap::addTrapezoid(const Trapezoid &trapezoid){
+size_t TrapezoidalMap::addTrapezoid(const Trapezoid &trapezoid){
     trapezoidsTable.push_back(trapezoid);
+    return trapezoidsTable.size()-1;
 }
 
 
@@ -66,9 +72,9 @@ cg3::Segment2d& TrapezoidalMap::getSegmentByPosition(const size_t position){
  * @param position The trapezoid position
  * @return The pointer to the trapezoid at the given position or nullptr
  */
-Trapezoid* TrapezoidalMap::getTrapezoidByPosition(const size_t position){
+Trapezoid& TrapezoidalMap::getTrapezoidByPosition(const size_t position){
     if(trapezoidsTable[position].isDeleted())
-        return nullptr;
+        return trapezoidsTable[SIZE_MAX];;
 
-    return &trapezoidsTable[position];
+    return trapezoidsTable[position];
 }

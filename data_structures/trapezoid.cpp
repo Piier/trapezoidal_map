@@ -35,6 +35,25 @@ Trapezoid::Trapezoid(bool bb){
     deleted=false;
 }
 
+/**
+ * @brief Trapezoid Constructor with the perimeter
+ * @param l Left point
+ * @param r Right point
+ * @param t Top segment
+ * @param b Bottom segment
+ */
+Trapezoid::Trapezoid(size_t l, size_t r, size_t t, size_t b){
+    leftp=l;
+    rightp=r;
+    top=t;;
+    bottom=b;
+    adjBottomLeft=SIZE_MAX;
+    adjBottomRight=SIZE_MAX;
+    adjTopLeft=SIZE_MAX;
+    adjTopRight=SIZE_MAX;
+    deleted=false;
+}
+
 //Getters
 size_t Trapezoid::getLeft() const{
     return leftp;

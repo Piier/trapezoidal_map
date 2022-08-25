@@ -13,6 +13,7 @@ private:
 public:
     Trapezoid();
     Trapezoid(bool bb);
+    Trapezoid(size_t l, size_t r, size_t t, size_t b);
 
     size_t getLeft() const;
     size_t getRight() const;

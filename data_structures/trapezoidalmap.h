@@ -12,13 +12,13 @@ private:
 public:
     TrapezoidalMap();
 
-    void addPoint(const cg3::Point2d & point);
-    void addSegment(const cg3::Segment2d & segment);
-    void addTrapezoid(const Trapezoid & trapezoid);
+    size_t addPoint(const cg3::Point2d & point);
+    size_t addSegment(const cg3::Segment2d & segment);
+    size_t addTrapezoid(const Trapezoid & trapezoid);
 
     cg3::Point2d& getPointByPosition(const size_t position);
     cg3::Segment2d& getSegmentByPosition(const size_t position);
-    Trapezoid* getTrapezoidByPosition(const size_t position);
+    Trapezoid& getTrapezoidByPosition(const size_t position);
 };
 
 #endif // TRAPEZOIDALMAP_H

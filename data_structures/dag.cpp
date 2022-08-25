@@ -26,9 +26,19 @@ Node& Dag::getRoot(){
 }
 
 /**
+ * @brief Dag::getSize Get the size of the dag
+ * @return The size of the dag
+ */
+size_t Dag::getSize(){
+    return dag.size();
+}
+
+/**
  * @brief Dag::addNode Add a node to the dag
  * @param newNode The node to add
  */
-void Dag::addNode(const Node &newNode){
+size_t Dag::addNode(Node &newNode){
+    newNode.setId(dag.size());
     dag.push_back(newNode);
+    return dag.size()-1;
 }
