@@ -50,6 +50,7 @@ SOURCES +=  \
     main.cpp \
     managers/trapezoidalmap_manager.cpp \
     utils/algorithms.cpp \
+    utils/dag_algorithms.cpp \
     utils/fileutils.cpp
 
 FORMS += \
@@ -65,6 +66,7 @@ HEADERS += \
     drawables/drawable_trapezoidalmap_dataset.h \
     managers/trapezoidalmap_manager.h \
     utils/algorithms.h \
+    utils/dag_algorithms.h \
     utils/fileutils.h
 
 
