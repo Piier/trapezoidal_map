@@ -199,7 +199,7 @@ void TrapezoidalMapManager::addSegmentToTrapezoidalMap(const cg3::Segment2d& seg
 
     //#####################################################################
 
-    Algorithms::addSegmentToMap(trapezoidalMap, dag, segment);
+    MapAlgorithms::addSegmentToMap(trapezoidalMap, dag, segment);
 
 }
 
