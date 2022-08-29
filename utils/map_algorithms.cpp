@@ -10,6 +10,11 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
 
     if(t1==t2)
         sameTrapezoid(map, tempSegment, dag.getNodeByPosition(t1).getElement(), dag, t1);
+    else{
+        std::vector<size_t> intersected = std::vector<size_t>();
+        intersected.push_back(dag.getNodeByPosition(t1).getElement());
+        AlgorithmsUtils::followSegment(map, segment, intersected);
+    }
 
     delete &tempSegment;
 }

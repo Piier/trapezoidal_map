@@ -30,4 +30,24 @@ cg3::Segment2d& checkSegment(const cg3::Segment2d& s){
     }
     return *segment;
 }
+
+/**
+ * @brief followSegment Return a list of trapezoid intersected by the segment s.
+ * @param map The map
+ * @param segment The segment
+ * @param intersected The vector (it must contain the starting trapezoid) that will contain the trapezoids
+ */
+void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vector<size_t>& intersected){
+    size_t i = 0;
+
+    while(segment.p2().x()>map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x()){
+        if(isPointOnTheLeft(segment.p1(), segment.p2(), map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()))){
+            intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight());
+        }else{
+            intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight());
+        }
+        i++;
+    }
+
+}
 }
