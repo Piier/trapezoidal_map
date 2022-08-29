@@ -16,19 +16,17 @@ bool isPointOnTheLeft(const cg3::Point2d &p1, const cg3::Point2d &p2, const cg3:
 /**
  * @brief checkSegment Check if the segment points are in ascending order
  * @param s The segment
- * @return A segment with the points in ascending order
+ * @param newSegment A segment with the points in ascending order
  */
-cg3::Segment2d& checkSegment(const cg3::Segment2d& s){
-    cg3::Segment2d *segment = new cg3::Segment2d();
+void checkSegment(const cg3::Segment2d& oldSegment, cg3::Segment2d &newSegment){
 
-    if(s.p1().x()<=s.p2().x()){
-        segment->setP1(s.p1());
-        segment->setP2(s.p2());
+    if(oldSegment.p1().x()<=oldSegment.p2().x()){
+        newSegment.setP1(oldSegment.p1());
+        newSegment.setP2(oldSegment.p2());
     }else{
-        segment->setP2(s.p1());
-        segment->setP1(s.p2());
+        newSegment.setP2(oldSegment.p1());
+        newSegment.setP1(oldSegment.p2());
     }
-    return *segment;
 }
 
 /**

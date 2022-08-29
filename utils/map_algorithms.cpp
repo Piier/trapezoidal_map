@@ -3,7 +3,9 @@
 namespace MapAlgorithms {
 
 void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segment){
-    cg3::Segment2d& tempSegment = AlgorithmsUtils::checkSegment(segment);
+    cg3::Segment2d tempSegment = cg3::Segment2d();
+
+    AlgorithmsUtils::checkSegment(segment, tempSegment);
 
     size_t t1 = queryDag(map, dag, dag.getRoot(), segment.p1());
     size_t t2 = queryDag(map, dag, dag.getRoot(), segment.p2());
@@ -16,7 +18,6 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
         AlgorithmsUtils::followSegment(map, segment, intersected);
     }
 
-    delete &tempSegment;
 }
 
 
