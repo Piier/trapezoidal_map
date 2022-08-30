@@ -35,4 +35,34 @@ void updateDagSameTrapezoid(Dag &dag, size_t nodeId, std::vector<size_t> & idVec
     dag.addNode(D);
 }
 
+/**
+ * @brief queryDag Perform a search in the Dag
+ * @param map The Trapezoidal map
+ * @param dag The Dag
+ * @param node The root node
+ * @param point The point to search
+ * @return The index of the node in the dag
+ */
+size_t queryDag(TrapezoidalMap &map, Dag & dag, Node &node, const cg3::Point2d &point){
+
+    Type type = node.getType();
+
+    //The node is a leaf
+    if(type==Type::T_Trapezoid)
+        return node.getId();
+
+    //The node is a point
+    if(type==Type::T_Point){
+        if(point.x()<=map.getPointByPosition(node.getElement()).x())
+            return queryDag(map, dag, dag.getNodeByPosition(node.getLeftChild()), point);
+        return queryDag(map, dag, dag.getNodeByPosition(node.getRightChild()), point);
+    }
+
+    //The node is a segment
+    cg3::Segment2d & s = map.getSegmentByPosition(node.getElement());
+    if(AlgorithmsUtils::isPointOnTheLeft(s.p1(), s.p2(), point))
+        return queryDag(map, dag, dag.getNodeByPosition(node.getLeftChild()), point);
+    return queryDag(map, dag, dag.getNodeByPosition(node.getRightChild()), point);
+}
+
 }
