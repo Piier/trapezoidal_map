@@ -19,6 +19,8 @@ public:
     cg3::Point2d& getPointByPosition(const size_t position);
     cg3::Segment2d& getSegmentByPosition(const size_t position);
     Trapezoid& getTrapezoidByPosition(const size_t position);
+
+    size_t trapezoidVectorSize();
 };
 
 #endif // TRAPEZOIDALMAP_H

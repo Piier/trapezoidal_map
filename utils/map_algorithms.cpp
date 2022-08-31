@@ -33,71 +33,9 @@ void differentTrapezoid(TrapezoidalMap &map, std::vector<size_t> &intersected, c
     size_t point1Id = map.addPoint(segment.p1());
     size_t point2Id = map.addPoint(segment.p2());
 
-    int i = 0;
-    int start = 0;
-    Trapezoid temp;
 
-    //Creating all the top trapezoid (the trapezoid on the top of the segment)
-    while(i<(intersected.size()-1)){
-        //The trapezoid is created only when the adj trapezoid has different top
-        if(map.getTrapezoidByPosition(intersected[i]).getTop()!=map.getTrapezoidByPosition(intersected[i+1]).getTop()){
-
-            temp = Trapezoid();
-            temp.setTop(map.getTrapezoidByPosition(intersected[i]).getTop());
-            temp.setBottom(segmentId);
-            temp.setRight(map.getTrapezoidByPosition(intersected[i]).getRight());
-            if(start==0)//If it is the first trapezoid is setted the left end-point as leftP
-                temp.setLeft(point1Id);
-            else
-                temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
-
-
-            upper.push_back(map.addTrapezoid(temp));
-            start=i+1;
-        }
-        i++;
-    }
-    //Same as in the cycle but now we are considering also the last intersected trapezoid,so the rightP is the right end-point
-    temp = Trapezoid();
-    temp.setTop(map.getTrapezoidByPosition(intersected[i]).getTop());
-    temp.setBottom(segmentId);
-    temp.setRight(point2Id);
-    if(start==0)
-        temp.setLeft(point1Id);
-    else
-        temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
-    upper.push_back(map.addTrapezoid(temp));
-
-    i = 0;
-    start = 0;
-
-    //Same but with the bottom trapezoid
-    while(i<(intersected.size()-1)){
-        if(map.getTrapezoidByPosition(intersected[i]).getBottom()!=map.getTrapezoidByPosition(intersected[i+1]).getBottom()){
-
-            temp = Trapezoid();
-            temp.setBottom(map.getTrapezoidByPosition(intersected[i]).getBottom());
-            temp.setTop(segmentId);
-            temp.setRight(map.getTrapezoidByPosition(intersected[i]).getRight());
-            if(start==0)
-                temp.setLeft(point1Id);
-            else
-                temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
-
-            lower.push_back(map.addTrapezoid(temp));
-            start=i+1;
-        }
-        i++;
-    }
-    temp = Trapezoid();
-    temp.setBottom(map.getTrapezoidByPosition(intersected[i]).getBottom());
-    temp.setTop(segmentId);
-    temp.setRight(point2Id);
-    if(start==0)
-        temp.setLeft(point1Id);
-    else
-        temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
-    lower.push_back(map.addTrapezoid(temp));
+    addNewTopTrapezoids(map, intersected, upper, point1Id, point2Id, segmentId);
+    addNewBottomTrapezoids(map, intersected, lower, point1Id, point2Id, segmentId);
 
     //Update the first and the last trapezoid
     Trapezoid &tA = map.getTrapezoidByPosition(intersected[0]);
@@ -111,8 +49,154 @@ void differentTrapezoid(TrapezoidalMap &map, std::vector<size_t> &intersected, c
     tB.setAdjTopLeft(upper.back());
     tB.setAdjBottomLeft(lower.back());
 
-    //Delete the intersected trapezoid from the map (not the first and the last, they're new trapezoid now)
-    i = 1;
+    deleteIntersectedTrapezoid(map, intersected);
+
+}
+
+/**
+ * @brief addNewBottomTrapezoids Add in the map the new trapezoid that are under the new segment
+ * @param map Map
+ * @param intersected List of intersected trapezoid
+ * @param lower List the will contain the position in the map of the new trapezoid
+ * @param point1Id The position in the map of the left-end point
+ * @param point2Id The position in the map of the right-end point
+ * @param segmentId The position in the map of the segment
+ */
+void addNewBottomTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId){
+    size_t i = 0;
+    size_t start = 0;
+    size_t idNewTrapezoid = map.trapezoidVectorSize();
+    Trapezoid temp;
+
+    //Creating all the top trapezoid (the trapezoid on the top of the segment)
+    while(i<(intersected.size()-1)){
+
+        //The trapezoid is created only when the adj trapezoid has different bottom
+        if(map.getTrapezoidByPosition(intersected[i]).getBottom()!=map.getTrapezoidByPosition(intersected[i+1]).getBottom()){
+
+            temp = Trapezoid();
+
+            //Creating the new trapezoid
+            temp.setBottom(map.getTrapezoidByPosition(intersected[i]).getBottom());
+            temp.setTop(segmentId);
+            temp.setRight(map.getTrapezoidByPosition(intersected[i]).getRight());
+            if(start==0){
+                temp.setLeft(point1Id);
+                temp.setAdjBottomLeft(intersected[0]);
+            }else{
+                temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
+                temp.setAdjBottomLeft(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft());
+                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
+                temp.setAdjTopLeft(idNewTrapezoid-1);
+                map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjTopRight(idNewTrapezoid);
+            }
+            temp.setAdjBottomRight(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight());
+            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight()).setAdjBottomLeft(idNewTrapezoid);
+
+            lower.push_back(map.addTrapezoid(temp));
+            start=i+1;
+            idNewTrapezoid++;
+        }
+        i++;
+    }
+
+    //Same as in the cycle but now we are considering also the last intersected trapezoid, so the rightP is the right end-point
+    temp = Trapezoid();
+    temp.setBottom(map.getTrapezoidByPosition(intersected[i]).getBottom());
+    temp.setTop(segmentId);
+    temp.setRight(point2Id);
+    if(start==0){
+        temp.setLeft(point1Id);
+        temp.setAdjBottomLeft(intersected[0]);
+    } else{
+        temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
+        temp.setAdjBottomLeft(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft());
+        map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
+        temp.setAdjTopLeft(idNewTrapezoid-1);
+        map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjTopRight(idNewTrapezoid);
+    }
+    temp.setAdjBottomRight(intersected.back());
+
+    lower.push_back(map.addTrapezoid(temp));
+}
+
+/**
+ * @brief addNewTopTrapezoids Add in the map the new trapezoid that are over the new segment
+ * @param map Map
+ * @param intersected List of intersected trapezoid
+ * @param lower List the will contain the position in the map of the new trapezoid
+ * @param point1Id The position in the map of the left-end point
+ * @param point2Id The position in the map of the right-end point
+ * @param segmentId The position in the map of the segment
+ */
+void addNewTopTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId){
+    size_t i = 0;
+    size_t start = 0;
+    size_t idNewTrapezoid = map.trapezoidVectorSize();
+    Trapezoid temp;
+
+    //Creating all the top trapezoid (the trapezoid on the top of the segment)
+    while(i<(intersected.size()-1)){
+        //The trapezoid is created only when the adj trapezoid has different top
+        if(map.getTrapezoidByPosition(intersected[i]).getTop()!=map.getTrapezoidByPosition(intersected[i+1]).getTop()){
+
+            temp = Trapezoid();
+
+            //Creating the new trapezoid
+            temp.setTop(map.getTrapezoidByPosition(intersected[i]).getTop());
+            temp.setBottom(segmentId);
+            temp.setRight(map.getTrapezoidByPosition(intersected[i]).getRight());
+            if(start==0){
+                temp.setLeft(point1Id);
+                temp.setAdjTopLeft(intersected[0]);
+            }
+            else{
+                temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
+                temp.setAdjTopLeft(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft());
+                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
+                temp.setAdjBottomLeft(idNewTrapezoid-1);
+                map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjBottomRight(idNewTrapezoid);
+            }
+            temp.setAdjTopRight(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight());
+            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight()).setAdjTopLeft(idNewTrapezoid);
+
+
+            upper.push_back(map.addTrapezoid(temp));//Adding the new trapezoid in the map and in upper
+            start=i+1;
+            idNewTrapezoid++;
+        }
+        i++;
+    }
+
+    //Same as in the cycle but now we are considering also the last intersected trapezoid, so the rightP is the right end-point
+    temp = Trapezoid();
+    temp.setTop(map.getTrapezoidByPosition(intersected[i]).getTop());
+    temp.setBottom(segmentId);
+    temp.setRight(point2Id);
+    if(start==0){
+        temp.setLeft(point1Id);
+        temp.setAdjTopLeft(intersected[0]);
+    }
+    else{
+        temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
+        temp.setAdjTopLeft(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft());
+        map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
+        temp.setAdjBottomLeft(idNewTrapezoid-1);
+        map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjBottomRight(idNewTrapezoid);
+    }
+    temp.setAdjTopRight(intersected.back());
+
+    upper.push_back(map.addTrapezoid(temp));
+}
+
+
+/**
+ * @brief Delete the intersected trapezoid from the map (not the first and the last, they're new trapezoid now)
+ * @param map
+ * @param intersected
+ */
+void deleteIntersectedTrapezoid(TrapezoidalMap & map, std::vector<size_t> &intersected){
+    size_t i = 1;
     while(i<intersected.size()-1){
         map.getTrapezoidByPosition(intersected[i]).setDeleted();
         i++;

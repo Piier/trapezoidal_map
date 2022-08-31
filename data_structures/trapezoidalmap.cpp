@@ -78,3 +78,12 @@ Trapezoid& TrapezoidalMap::getTrapezoidByPosition(const size_t position){
 
     return trapezoidsTable[position];
 }
+
+
+/**
+ * @brief TrapezoidalMap::trapezoidVectorSize Return he size of the vector that contains the trapezoids
+ * @return The size of the vector that contains the trapezoids
+ */
+size_t TrapezoidalMap::trapezoidVectorSize(){
+    return trapezoidsTable.size();
+}
