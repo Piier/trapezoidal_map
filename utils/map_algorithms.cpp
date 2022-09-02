@@ -10,9 +10,9 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     size_t t1 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), segment.p1());
     size_t t2 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), segment.p2());
 
-    if(t1==t2)
+    if(t1==t2){
         sameTrapezoid(map, tempSegment, dag.getNodeByPosition(t1).getElement(), dag, t1);
-    else{
+    }else{
         std::vector<size_t> intersected = std::vector<size_t>();
         intersected.push_back(dag.getNodeByPosition(t1).getElement());
         AlgorithmsUtils::followSegment(map, segment, intersected);
@@ -260,7 +260,7 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     trapezoidA.setAdjBottomRight(trapezoidCId);
 
     //Update dag
-    DagAlgorithms::updateDagSameTrapezoid(dag, nodeId, idVector);
+    DagAlgorithms::updateDagSameTrapezoid(map, dag, nodeId, idVector);
 }
 
 

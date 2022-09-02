@@ -8,11 +8,11 @@ private:
     size_t leftp, rightp;
     size_t top, bottom;
     size_t adjTopRight, adjTopLeft, adjBottomRight, adjBottomLeft;
+    size_t nodeId;
     bool deleted;
 
 public:
     Trapezoid();
-    Trapezoid(bool bb);
     Trapezoid(size_t l, size_t r, size_t t, size_t b);
 
     size_t getLeft() const;
@@ -23,6 +23,7 @@ public:
     size_t getAdjTopLeft() const;
     size_t getAdjBottomRight() const;
     size_t getAdjBottomLeft() const;
+    size_t getNodeId() const;
     bool isDeleted() const;
 
     void setLeft(const size_t newLeft);
@@ -34,6 +35,7 @@ public:
     void setAdjBottomRight(const size_t newAdj);
     void setAdjBottomLeft(const size_t newAdj);
     void setDeleted();
+    void setNodeId(const size_t newId);
 
 };
 

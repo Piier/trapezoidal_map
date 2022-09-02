@@ -17,22 +17,7 @@ Trapezoid::Trapezoid(){
     adjTopLeft=SIZE_MAX;
     adjTopRight=SIZE_MAX;
     deleted=false;
-}
-
-/**
- * @brief Trapezoid::Trapezoid Constructor for the bounding box
- * @param bb A flag used for overloading
- */
-Trapezoid::Trapezoid(bool bb){
-    leftp=BB_LEFTP;
-    rightp=BB_RIGHTP;
-    top=BB_TOP;;
-    bottom=BB_BOTTOM;
-    adjBottomLeft=SIZE_MAX;
-    adjBottomRight=SIZE_MAX;
-    adjTopLeft=SIZE_MAX;
-    adjTopRight=SIZE_MAX;
-    deleted=false;
+    nodeId=0;
 }
 
 /**
@@ -52,6 +37,7 @@ Trapezoid::Trapezoid(size_t l, size_t r, size_t t, size_t b){
     adjTopLeft=SIZE_MAX;
     adjTopRight=SIZE_MAX;
     deleted=false;
+    nodeId=0;
 }
 
 //Getters
@@ -89,6 +75,10 @@ size_t Trapezoid::getAdjTopRight() const{
 
 bool Trapezoid::isDeleted() const{
     return deleted;
+}
+
+size_t Trapezoid::getNodeId() const{
+    return nodeId;
 }
 
 //Setters
@@ -129,6 +119,9 @@ void Trapezoid::setDeleted(){
     deleted=true;
 }
 
+void Trapezoid::setNodeId(const size_t newId){
+    nodeId=newId;
+}
 
 
 

@@ -8,7 +8,7 @@ namespace DagAlgorithms {
  * @param nodeId The position of the node in the dag
  * @param idVector A vector of the ids of the elements in the trapezoidal map
  */
-void updateDagSameTrapezoid(Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+void updateDagSameTrapezoid(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
 
     size_t dagSize = dag.getSize();
 
@@ -26,13 +26,13 @@ void updateDagSameTrapezoid(Dag &dag, size_t nodeId, std::vector<size_t> & idVec
     nodeP1.setLeftChild(dagSize+2);
     nodeP1.setRightChild(dagSize);
 
-    //Adding the new nodes
+    //Adding the new nodes and updating the id in the trapezoid
     dag.addNode(nodeP2);
     dag.addNode(nodeS1);
-    dag.addNode(A);
-    dag.addNode(B);
-    dag.addNode(C);
-    dag.addNode(D);
+    map.getTrapezoidByPosition(idVector[3]).setNodeId(dag.addNode(A));
+    map.getTrapezoidByPosition(idVector[4]).setNodeId(dag.addNode(B));
+    map.getTrapezoidByPosition(idVector[5]).setNodeId(dag.addNode(C));
+    map.getTrapezoidByPosition(idVector[6]).setNodeId(dag.addNode(D));
 }
 
 /**

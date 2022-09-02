@@ -15,7 +15,7 @@ TrapezoidalMap::TrapezoidalMap(){
     pointsTable.push_back(cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX));
     segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,BOUNDINGBOX)));
     segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,-BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX)));
-    trapezoidsTable.push_back(Trapezoid(true));
+    trapezoidsTable.push_back(Trapezoid());
 }
 
 /**
