@@ -7,31 +7,36 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
 
     AlgorithmsUtils::checkSegment(segment, tempSegment);
 
-    size_t t1 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), segment.p1());
-    size_t t2 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), segment.p2());
+    size_t t1 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), tempSegment.p1());
+    size_t t2 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), tempSegment.p2());
 
     if(t1==t2){
         sameTrapezoid(map, tempSegment, dag.getNodeByPosition(t1).getElement(), dag, t1);
     }else{
         std::vector<size_t> intersected = std::vector<size_t>();
         intersected.push_back(dag.getNodeByPosition(t1).getElement());
-        AlgorithmsUtils::followSegment(map, segment, intersected);
-        differentTrapezoid(map, intersected, tempSegment);
+        AlgorithmsUtils::followSegment(map, tempSegment, intersected);
+        differentTrapezoid(map, dag, intersected, tempSegment);
         int i;
         i=0;
     }
 
+
 }
 
 
-void differentTrapezoid(TrapezoidalMap &map, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
+void differentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
     std::vector<size_t> upper = std::vector<size_t>();
     std::vector<size_t> lower = std::vector<size_t>();
+    std::vector<size_t> ids = std::vector<size_t>();
 
     //Adding the segment and points in the map
     size_t segmentId = map.addSegment(segment);
     size_t point1Id = map.addPoint(segment.p1());
     size_t point2Id = map.addPoint(segment.p2());
+    ids.push_back(point1Id);
+    ids.push_back(point2Id);
+    ids.push_back(segmentId);
 
 
     addNewTopTrapezoids(map, intersected, upper, point1Id, point2Id, segmentId);
@@ -49,6 +54,7 @@ void differentTrapezoid(TrapezoidalMap &map, std::vector<size_t> &intersected, c
     tB.setAdjTopLeft(upper.back());
     tB.setAdjBottomLeft(lower.back());
 
+    DagAlgorithms::updateDagDifferentTrapezoid(map, dag, intersected, upper, lower, ids);
     deleteIntersectedTrapezoid(map, intersected);
 
 }
@@ -216,7 +222,7 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
 
 
     std::vector<size_t> idVector = std::vector<size_t>();
-    Trapezoid & t = map.getTrapezoidByPosition(trapezoidAId);
+    Trapezoid t = map.getTrapezoidByPosition(trapezoidAId);
 
     //Adding the segment, points and trapezoids in the map
     size_t segmentId = map.addSegment(segment);
@@ -262,6 +268,5 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     //Update dag
     DagAlgorithms::updateDagSameTrapezoid(map, dag, nodeId, idVector);
 }
-
 
 }

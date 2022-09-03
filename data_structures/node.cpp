@@ -1,5 +1,13 @@
 #include "node.h"
 
+Node::Node(){
+    element=SIZE_MAX;
+    type=Type::T_Point;
+    leftChild=SIZE_MAX;
+    rightChild=SIZE_MAX;
+    id=0;
+}
+
 /**
  * @brief Node::Node Constuctor
  * @param e Position of the element in the trapezoidal map
@@ -68,4 +76,14 @@ void Node::setRightChild(const size_t newRightChild){
 
 void Node::setId(const size_t newId){
     id=newId;
+}
+
+void Node::setElementAndType(const size_t e, Type t){
+    element=e;
+    type=t;
+}
+
+void Node::setChildren(const size_t lc, const size_t rc){
+    leftChild=lc;
+    rightChild=rc;
 }

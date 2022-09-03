@@ -20,6 +20,7 @@ private:
     size_t id;
 
 public:
+    Node();
     Node(const size_t e, Type t);
     Node(const size_t e, Type t, size_t lc, size_t rc);
 
@@ -34,6 +35,8 @@ public:
     void setLeftChild(const size_t newLeftChild);
     void setRightChild(const size_t newRightChild);
     void setId(const size_t newId);
+    void setElementAndType(const size_t e, Type t);
+    void setChildren(const size_t lc, const size_t rc);
 };
 
 #endif // NODE_H

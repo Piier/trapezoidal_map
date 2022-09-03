@@ -39,12 +39,13 @@ void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vecto
     size_t i = 0;
 
     while(segment.p2().x()>map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x()){
-        if(isPointOnTheLeft(segment.p1(), segment.p2(), map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()))){
+       if(isPointOnTheLeft(segment.p1(), segment.p2(), map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()))){
             intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight());
         }else{
             intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight());
         }
         i++;
+
     }
 
 }

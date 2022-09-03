@@ -5,19 +5,19 @@
 #define BB_BOTTOM 1
 
 /**
- * @brief Trapezoid::Trapezoid Constructor
+ * @brief Trapezoid::Trapezoid Constructor that create the bb
  */
 Trapezoid::Trapezoid(){
-    leftp=SIZE_MAX;
-    rightp=SIZE_MAX;
-    top=SIZE_MAX;;
-    bottom=SIZE_MAX;
-    adjBottomLeft=SIZE_MAX;
-    adjBottomRight=SIZE_MAX;
-    adjTopLeft=SIZE_MAX;
-    adjTopRight=SIZE_MAX;
-    deleted=false;
-    nodeId=0;
+      leftp=BB_LEFTP;
+      rightp=BB_RIGHTP;
+      top=BB_TOP;;
+      bottom=BB_BOTTOM;
+      adjBottomLeft=SIZE_MAX;
+      adjBottomRight=SIZE_MAX;
+      adjTopLeft=SIZE_MAX;
+      adjTopRight=SIZE_MAX;
+      deleted=false;
+      nodeId=0;
 }
 
 /**
