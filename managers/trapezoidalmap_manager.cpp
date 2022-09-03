@@ -64,6 +64,7 @@ TrapezoidalMapManager::TrapezoidalMapManager(QWidget *parent) :
     //The mainWindow will take care of rendering the bounding box and the selected point
     mainWindow.pushDrawableObject(&drawableBoundingBox, "Bounding box");
     mainWindow.pushDrawableObject(&drawableTrapezoidalMapDataset, "Segments");
+    mainWindow.pushDrawableObject(&dMap, "Trapezoidal Map");
 
 
 
@@ -105,6 +106,7 @@ TrapezoidalMapManager::~TrapezoidalMapManager()
     //Delete the drawable objects
     mainWindow.deleteDrawableObject(&drawableBoundingBox);
     mainWindow.deleteDrawableObject(&drawableTrapezoidalMapDataset);
+    mainWindow.deleteDrawableObject(&dMap);
     if (isFirstPointSelected) {
         mainWindow.deleteDrawableObject(&firstPointSelected);
     }
@@ -199,7 +201,7 @@ void TrapezoidalMapManager::addSegmentToTrapezoidalMap(const cg3::Segment2d& seg
 
     //#####################################################################
 
-    MapAlgorithms::addSegmentToMap(trapezoidalMap, dag, segment);
+    MapAlgorithms::addSegmentToMap(dMap, dag, segment);
 
 }
 

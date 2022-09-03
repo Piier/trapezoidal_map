@@ -47,6 +47,15 @@ void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vecto
         i++;
 
     }
+}
 
+/**
+ * @brief getYGivenX Get the y value of a point that lies in segment given the x
+ * @param segment The segment
+ * @param x X value
+ * @return The y value
+ */
+double getYGivenX(const cg3::Segment2d& segment, const double x){
+    return (segment.p1().y()+(segment.p2().y()-segment.p1().y())/(segment.p2().x()-segment.p1().x())*(x-segment.p1().x()));
 }
 }

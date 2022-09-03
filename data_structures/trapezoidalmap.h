@@ -4,7 +4,7 @@
 
 class TrapezoidalMap{
 
-private:
+protected:
     std::vector<cg3::Point2d> pointsTable;
     std::vector<cg3::Segment2d> segmentsTable;
     std::vector<Trapezoid> trapezoidsTable;
