@@ -5,7 +5,6 @@ Node::Node(){
     type=Type::T_Point;
     leftChild=SIZE_MAX;
     rightChild=SIZE_MAX;
-    id=0;
 }
 
 /**
@@ -18,7 +17,6 @@ Node::Node(const size_t e, Type t){
     type=t;
     leftChild=SIZE_MAX;
     rightChild=SIZE_MAX;
-    id=0;
 }
 
 /**
@@ -33,7 +31,6 @@ Node::Node(const size_t e, Type t, size_t lc, size_t rc){
     type=t;
     leftChild=lc;
     rightChild=rc;
-    id=0;
 }
 
 //Getters
@@ -53,9 +50,6 @@ size_t Node::getElement() const{
     return element;
 }
 
-size_t Node::getId() const{
-    return id;
-}
 
 //Setters
 void Node::setElement(const size_t newElement){
@@ -72,10 +66,6 @@ void Node::setLeftChild(const size_t newLeftChild){
 
 void Node::setRightChild(const size_t newRightChild){
     rightChild=newRightChild;
-}
-
-void Node::setId(const size_t newId){
-    id=newId;
 }
 
 void Node::setElementAndType(const size_t e, Type t){

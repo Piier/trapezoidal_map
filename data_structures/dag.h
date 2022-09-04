@@ -15,6 +15,7 @@ public:
     Node& getRoot();
     size_t addNode(Node &newNode);
     size_t getSize();
+    void clear();
 
 };
 

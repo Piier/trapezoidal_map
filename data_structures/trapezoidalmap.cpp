@@ -87,3 +87,19 @@ Trapezoid& TrapezoidalMap::getTrapezoidByPosition(const size_t position){
 size_t TrapezoidalMap::trapezoidVectorSize(){
     return trapezoidsTable.size();
 }
+
+
+void TrapezoidalMap::clear(){
+    pointsTable.clear();
+    segmentsTable.clear();
+    trapezoidsTable.clear();
+
+    //Re-initialize
+    pointsTable.push_back(cg3::Point2d(-BOUNDINGBOX,BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(BOUNDINGBOX,BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(-BOUNDINGBOX,-BOUNDINGBOX));
+    pointsTable.push_back(cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX));
+    segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,BOUNDINGBOX)));
+    segmentsTable.push_back(cg3::Segment2d(cg3::Point2d(-BOUNDINGBOX,-BOUNDINGBOX),cg3::Point2d(BOUNDINGBOX,-BOUNDINGBOX)));
+    trapezoidsTable.push_back(Trapezoid());
+}

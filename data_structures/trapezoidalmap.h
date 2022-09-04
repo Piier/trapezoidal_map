@@ -21,6 +21,7 @@ public:
     Trapezoid& getTrapezoidByPosition(const size_t position);
 
     size_t trapezoidVectorSize();
+    void clear();
 };
 
 #endif // TRAPEZOIDALMAP_H

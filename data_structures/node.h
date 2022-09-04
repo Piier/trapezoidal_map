@@ -17,7 +17,6 @@ private:
     Type type;
     size_t leftChild, rightChild;
     size_t element;
-    size_t id;
 
 public:
     Node();
@@ -28,7 +27,6 @@ public:
     size_t getLeftChild() const;
     size_t getRightChild() const;
     size_t getElement() const;
-    size_t getId() const;
 
     void setElement(const size_t newElement);
     void setType(Type newType);

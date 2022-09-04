@@ -38,7 +38,12 @@ size_t Dag::getSize(){
  * @param newNode The node to add
  */
 size_t Dag::addNode(Node &newNode){
-    newNode.setId(dag.size());
     dag.push_back(newNode);
     return dag.size()-1;
+}
+
+void Dag::clear(){
+    dag.clear();
+    //Re-initialize
+    dag.push_back(Node(0,Type::T_Trapezoid));
 }
