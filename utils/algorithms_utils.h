@@ -9,6 +9,7 @@ namespace AlgorithmsUtils {
     void checkSegment(const cg3::Segment2d& oldSegment, cg3::Segment2d& newSegment);
     void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vector<size_t>& intersected);
     double getYGivenX(const cg3::Segment2d& segment, const double x);
+    unsigned long xorshf96();
 }
 
 #endif // ALGORITHMS_UTILS_H

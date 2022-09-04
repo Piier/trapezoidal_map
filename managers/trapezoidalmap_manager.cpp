@@ -202,6 +202,7 @@ void TrapezoidalMapManager::addSegmentToTrapezoidalMap(const cg3::Segment2d& seg
     //#####################################################################
 
     MapAlgorithms::addSegmentToMap(dMap, dag, segment);
+    dMap.addColors(dMap.trapezoidVectorSize());
 
 }
 

@@ -58,4 +58,25 @@ void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vecto
 double getYGivenX(const cg3::Segment2d& segment, const double x){
     return (segment.p1().y()+(segment.p2().y()-segment.p1().y())/(segment.p2().x()-segment.p1().x())*(x-segment.p1().x()));
 }
+
+
+/**
+ * @note https://stackoverflow.com/questions/1640258/need-a-fast-random-generator-for-c
+ * @brief xorshf96 Random generator
+ * @return A random number
+ */
+unsigned long xorshf96() {
+    static unsigned long x=123456789, y=362436069, z=521288629;
+    unsigned long t;
+    x ^= x << 16;
+    x ^= x >> 5;
+    x ^= x << 1;
+
+    t = x;
+    x = y;
+    y = z;
+    z = t ^ x ^ y;
+
+   return z;
+}
 }

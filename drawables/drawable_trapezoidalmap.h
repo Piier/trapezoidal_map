@@ -4,6 +4,8 @@
 #include <cg3/viewer/interfaces/drawable_object.h>
 class DrawableTrapezoidalMap : public TrapezoidalMap, public cg3::DrawableObject{
 
+private:
+    std::vector<cg3::Color> colors;
 
 
 public:
@@ -12,6 +14,9 @@ public:
      void draw() const;
      cg3::Point3d sceneCenter() const;
      double sceneRadius() const;
+
+     cg3::Color randColor();
+     void addColors(size_t n);
 
 };
 
