@@ -7,7 +7,7 @@ class DrawableTrapezoidalMap : public TrapezoidalMap, public cg3::DrawableObject
 private:
     std::vector<cg3::Color> colors;
     size_t query;
-
+    const cg3::Color black = cg3::Color(0,0,0);
 
 public:
      DrawableTrapezoidalMap();

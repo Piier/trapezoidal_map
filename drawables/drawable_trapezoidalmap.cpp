@@ -2,6 +2,8 @@
 #include "utils/algorithms_utils.h"
 #include <cg3/viewer/opengl_objects/opengl_objects2.h>
 
+#define COLOR_UPPER 255
+#define COLOR_LOWER 30
 
 DrawableTrapezoidalMap::DrawableTrapezoidalMap(): query(SIZE_MAX){
     TrapezoidalMap();
@@ -18,7 +20,10 @@ void DrawableTrapezoidalMap::draw() const{
                                                     cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getRight()].x())),
                                                     cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getRight()].x())),
                                                     cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getLeft()].x()))};
-            cg3::opengl::drawQuad2(vertices, i==query ? cg3::Color(0,0,0) :colors[i], 1, true);
+
+            cg3::opengl::drawLine2(vertices[0],vertices[3], black, 1);
+            cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
+            cg3::opengl::drawQuad2(vertices, i==query ? black : colors[i], 1, true);
         }
         i++;
     }
@@ -29,7 +34,10 @@ void DrawableTrapezoidalMap::draw() const{
  * @return A colot
  */
 cg3::Color DrawableTrapezoidalMap::randColor(){
-    return cg3::Color(AlgorithmsUtils::xorshf96()%255,AlgorithmsUtils::xorshf96()%255,AlgorithmsUtils::xorshf96()%255);
+    int i = COLOR_UPPER - COLOR_LOWER +1;
+    return cg3::Color(((AlgorithmsUtils::xorshf96()-COLOR_LOWER)%i+i)%i+COLOR_LOWER,
+                      ((AlgorithmsUtils::xorshf96()-COLOR_LOWER)%i+i)%i+COLOR_LOWER,
+                      ((AlgorithmsUtils::xorshf96()-COLOR_LOWER)%i+i)%i+COLOR_LOWER);
 }
 
 /**

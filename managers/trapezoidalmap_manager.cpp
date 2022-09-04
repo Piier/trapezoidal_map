@@ -203,7 +203,7 @@ void TrapezoidalMapManager::addSegmentToTrapezoidalMap(const cg3::Segment2d& seg
 
     MapAlgorithms::addSegmentToMap(dMap, dag, segment);
     dMap.addColors(dMap.trapezoidVectorSize());
-
+    dMap.setQuery(SIZE_MAX);//Re-init the query trapezoid
 }
 
 /**
