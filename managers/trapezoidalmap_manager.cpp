@@ -257,12 +257,8 @@ void TrapezoidalMapManager::queryTrapezoidalMap(const cg3::Point2d& queryPoint)
     //#####################################################################
 
 
+    dMap.setQuery(DagAlgorithms::queryDag(dMap, dag, dag.getRoot(), queryPoint));
 
-    //You can delete this line after you implement the algorithm: it is
-    //just needed to suppress the unused-variable warning
-    std::cout<<"---------------------"<<std::endl;
-    size_t v =DagAlgorithms::queryDag(trapezoidalMap, dag, dag.getRoot(), queryPoint);
-    std::cout<<dag.getNodeByPosition(v).getElement()<<std::endl;
 
 
 }

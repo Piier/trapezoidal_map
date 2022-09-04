@@ -61,7 +61,7 @@ private:
     //---------------------------------------------------------------------
     //Declare your attributes here
 
-    TrapezoidalMap trapezoidalMap = TrapezoidalMap();
+
     Dag dag = Dag();
     DrawableTrapezoidalMap dMap;
 

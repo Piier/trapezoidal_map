@@ -11,14 +11,12 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     size_t t2 = DagAlgorithms::queryDag(map, dag, dag.getRoot(), tempSegment.p2());
 
     if(t1==t2){
-        sameTrapezoid(map, tempSegment, dag.getNodeByPosition(t1).getElement(), dag, t1);
+        sameTrapezoid(map, tempSegment, t1, dag, map.getTrapezoidByPosition(t1).getNodeId());
     }else{
         std::vector<size_t> intersected = std::vector<size_t>();
-        intersected.push_back(dag.getNodeByPosition(t1).getElement());
+        intersected.push_back(t1);
         AlgorithmsUtils::followSegment(map, tempSegment, intersected);
         differentTrapezoid(map, dag, intersected, tempSegment);
-        int i;
-        i=0;
     }
 
 

@@ -6,6 +6,7 @@ class DrawableTrapezoidalMap : public TrapezoidalMap, public cg3::DrawableObject
 
 private:
     std::vector<cg3::Color> colors;
+    size_t query;
 
 
 public:
@@ -17,6 +18,7 @@ public:
 
      cg3::Color randColor();
      void addColors(size_t n);
+     void setQuery(size_t val);
 
 };
 

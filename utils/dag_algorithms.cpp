@@ -124,14 +124,14 @@ void updateDagDifferentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size
  * @param dag The Dag
  * @param node The root node
  * @param point The point to search
- * @return The index of the node in the dag
+ * @return The index of the trapezoid in the map
  */
 size_t queryDag(TrapezoidalMap &map, Dag & dag, Node &node, const cg3::Point2d &point){
 
     Type type = node.getType();
     //The node is a leaf
     if(type==Type::T_Trapezoid)
-        return node.getId();
+        return node.getElement();
 
     //The node is a point
     if(type==Type::T_Point){

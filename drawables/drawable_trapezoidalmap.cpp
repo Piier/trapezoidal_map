@@ -3,7 +3,7 @@
 #include <cg3/viewer/opengl_objects/opengl_objects2.h>
 
 
-DrawableTrapezoidalMap::DrawableTrapezoidalMap(){
+DrawableTrapezoidalMap::DrawableTrapezoidalMap(): query(SIZE_MAX){
     TrapezoidalMap();
     colors.push_back(randColor());//The first color
 }
@@ -18,7 +18,7 @@ void DrawableTrapezoidalMap::draw() const{
                                                     cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getRight()].x())),
                                                     cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getRight()].x())),
                                                     cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getLeft()].x()))};
-            cg3::opengl::drawQuad2(vertices, colors[i], 1, true);
+            cg3::opengl::drawQuad2(vertices, i==query ? cg3::Color(0,0,0) :colors[i], 1, true);
         }
         i++;
     }
@@ -42,6 +42,10 @@ void DrawableTrapezoidalMap::addColors(size_t n){
         colors.push_back(randColor());
         i++;
     }
+}
+
+void DrawableTrapezoidalMap::setQuery(size_t val){
+    query=val;
 }
 
 cg3::Point3d DrawableTrapezoidalMap::sceneCenter() const
