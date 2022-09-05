@@ -576,6 +576,8 @@ void TrapezoidalMapManager::on_randomSegmentsButton_clicked() //Do not write cod
     //Clear current data
     clearTrapezoidalMap();
     drawableTrapezoidalMapDataset.clear();
+    dMap.clear();
+    dag.clear();
 
     for (const cg3::Segment2d& segment : segments) {
         bool insertedSegment;

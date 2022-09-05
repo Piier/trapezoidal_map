@@ -244,6 +244,9 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     Trapezoid & trapezoidC = map.getTrapezoidByPosition(trapezoidCId);
     Trapezoid & trapezoidD = map.getTrapezoidByPosition(trapezoidDId);
 
+    Trapezoid & trapezoidAdjTR = map.getTrapezoidByPosition(trapezoidA.getAdjTopRight());
+    Trapezoid & trapezoidAdjBR = map.getTrapezoidByPosition(trapezoidA.getAdjBottomRight());
+
     trapezoidB.setAdjTopLeft(trapezoidAId);
     trapezoidB.setAdjBottomLeft(SIZE_MAX);
     trapezoidB.setAdjTopRight(trapezoidDId);
@@ -258,6 +261,9 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     trapezoidD.setAdjBottomLeft(trapezoidCId);
     trapezoidD.setAdjTopRight(trapezoidA.getAdjTopRight());
     trapezoidD.setAdjBottomRight(trapezoidA.getAdjBottomRight());
+
+    trapezoidAdjTR.setAdjTopLeft(trapezoidDId);
+    trapezoidAdjBR.setAdjBottomLeft(trapezoidDId);
 
     trapezoidA.setRight(point1Id);
     trapezoidA.setAdjTopRight(trapezoidBId);
