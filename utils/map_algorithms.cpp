@@ -90,12 +90,14 @@ void addNewBottomTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersect
             }else{
                 temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
                 temp.setAdjBottomLeft(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft());
-                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
                 temp.setAdjTopLeft(idNewTrapezoid-1);
                 map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjTopRight(idNewTrapezoid);
+                if(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()!=SIZE_MAX)
+                    map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
             }
             temp.setAdjBottomRight(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight());
-            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight()).setAdjBottomLeft(idNewTrapezoid);
+            if(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight()!=SIZE_MAX)
+                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight()).setAdjBottomLeft(idNewTrapezoid);
 
             lower.push_back(map.addTrapezoid(temp));
             start=i+1;
@@ -115,9 +117,11 @@ void addNewBottomTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersect
     } else{
         temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
         temp.setAdjBottomLeft(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft());
-        map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
         temp.setAdjTopLeft(idNewTrapezoid-1);
         map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjTopRight(idNewTrapezoid);
+        if(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()!=SIZE_MAX)
+            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjBottomLeft()).setAdjBottomRight(idNewTrapezoid);
+
     }
     temp.setAdjBottomRight(intersected.back());
 
@@ -157,12 +161,15 @@ void addNewTopTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected,
             else{
                 temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
                 temp.setAdjTopLeft(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft());
-                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
                 temp.setAdjBottomLeft(idNewTrapezoid-1);
                 map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjBottomRight(idNewTrapezoid);
+                if(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()!=SIZE_MAX)
+                    map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
+
             }
             temp.setAdjTopRight(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight());
-            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight()).setAdjTopLeft(idNewTrapezoid);
+            if(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight()!=SIZE_MAX)
+                map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight()).setAdjTopLeft(idNewTrapezoid);
 
 
             upper.push_back(map.addTrapezoid(temp));//Adding the new trapezoid in the map and in upper
@@ -184,9 +191,11 @@ void addNewTopTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected,
     else{
         temp.setLeft(map.getTrapezoidByPosition(intersected[start]).getLeft());
         temp.setAdjTopLeft(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft());
-        map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
         temp.setAdjBottomLeft(idNewTrapezoid-1);
         map.getTrapezoidByPosition(idNewTrapezoid-1).setAdjBottomRight(idNewTrapezoid);
+        if(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()!=SIZE_MAX)
+            map.getTrapezoidByPosition(map.getTrapezoidByPosition(intersected[start]).getAdjTopLeft()).setAdjTopRight(idNewTrapezoid);
+
     }
     temp.setAdjTopRight(intersected.back());
 
@@ -244,8 +253,15 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     Trapezoid & trapezoidC = map.getTrapezoidByPosition(trapezoidCId);
     Trapezoid & trapezoidD = map.getTrapezoidByPosition(trapezoidDId);
 
-    Trapezoid & trapezoidAdjTR = map.getTrapezoidByPosition(trapezoidA.getAdjTopRight());
-    Trapezoid & trapezoidAdjBR = map.getTrapezoidByPosition(trapezoidA.getAdjBottomRight());
+    if(trapezoidA.getAdjTopRight()!=SIZE_MAX){
+        Trapezoid & trapezoidAdjTR = map.getTrapezoidByPosition(trapezoidA.getAdjTopRight());
+        trapezoidAdjTR.setAdjTopLeft(trapezoidDId);
+    }
+
+    if(trapezoidA.getAdjBottomRight()!=SIZE_MAX){
+        Trapezoid & trapezoidAdjBR = map.getTrapezoidByPosition(trapezoidA.getAdjBottomRight());
+        trapezoidAdjBR.setAdjBottomLeft(trapezoidDId);
+    }
 
     trapezoidB.setAdjTopLeft(trapezoidAId);
     trapezoidB.setAdjBottomLeft(SIZE_MAX);
@@ -261,9 +277,6 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
     trapezoidD.setAdjBottomLeft(trapezoidCId);
     trapezoidD.setAdjTopRight(trapezoidA.getAdjTopRight());
     trapezoidD.setAdjBottomRight(trapezoidA.getAdjBottomRight());
-
-    trapezoidAdjTR.setAdjTopLeft(trapezoidDId);
-    trapezoidAdjBR.setAdjBottomLeft(trapezoidDId);
 
     trapezoidA.setRight(point1Id);
     trapezoidA.setAdjTopRight(trapezoidBId);

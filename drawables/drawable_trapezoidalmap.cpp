@@ -23,7 +23,14 @@ void DrawableTrapezoidalMap::draw() const{
 
             cg3::opengl::drawLine2(vertices[0],vertices[3], black, 1);
             cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
-            cg3::opengl::drawQuad2(vertices, i==query ? black : colors[i], 1, true);
+            cg3::Color c;
+
+            if((query!=SIZE_MAX) && (i==trapezoidsTable[query].getAdjBottomLeft() || i==trapezoidsTable[query].getAdjBottomRight() || i==trapezoidsTable[query].getAdjTopLeft() || i==trapezoidsTable[query].getAdjTopRight()))
+            {c= cg3::Color(255,0,0);}
+             else{
+                    c=colors[i];
+                }
+            cg3::opengl::drawQuad2(vertices, i==query ? black : c, 1, true);
         }
         i++;
     }
