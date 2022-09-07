@@ -9,6 +9,7 @@ namespace AlgorithmsUtils {
     void checkSegment(const cg3::Segment2d& oldSegment, cg3::Segment2d& newSegment);
     void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vector<size_t>& intersected);
     double getYGivenX(const cg3::Segment2d& segment, const double x);
+    bool pointEssentiallyEqual(cg3::Point2d a, cg3::Point2d b);
     unsigned long xorshf96();
 }
 

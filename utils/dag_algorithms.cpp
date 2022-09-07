@@ -36,6 +36,64 @@ void updateDagSameTrapezoid(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::
 }
 
 /**
+ * @brief updateDagSameTrapezoid Update the dag when the end-points of the segment are in the same trapezoid and the right end-point is the same as another point
+ * @param dag The dag
+ * @param nodeId The position of the node in the dag
+ * @param idVector A vector of the ids of the elements in the trapezoidal map
+ */
+void updateDagSameTrapezoidSamePointQ(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+
+    size_t dagSize = dag.getSize();
+
+    //New nodes
+    Node & nodeP1 = dag.getNodeByPosition(nodeId);//NodeId
+    Node nodeS1 = Node(idVector[0], Type::T_Segment, dagSize+2, dagSize+3);//dagSize
+    Node A = Node(idVector[3], Type::T_Trapezoid);//dagSize+1
+    Node B = Node(idVector[4], Type::T_Trapezoid);//dagSize+2
+    Node C = Node(idVector[5], Type::T_Trapezoid);//dagSize+3
+
+    nodeP1.setType(Type::T_Point);
+    nodeP1.setElement(idVector[1]);
+    nodeP1.setLeftChild(dagSize+1);
+    nodeP1.setRightChild(dagSize);
+
+    //Adding the new nodes and updating the id in the trapezoid
+    dag.addNode(nodeS1);
+    map.getTrapezoidByPosition(idVector[3]).setNodeId(dag.addNode(A));
+    map.getTrapezoidByPosition(idVector[4]).setNodeId(dag.addNode(B));
+    map.getTrapezoidByPosition(idVector[5]).setNodeId(dag.addNode(C));
+}
+
+/**
+ * @brief updateDagSameTrapezoid Update the dag when the end-points of the segment are in the same trapezoid and the left end-point is the same as another point
+ * @param dag The dag
+ * @param nodeId The position of the node in the dag
+ * @param idVector A vector of the ids of the elements in the trapezoidal map
+ */
+void updateDagSameTrapezoidSamePointP(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+
+    size_t dagSize = dag.getSize();
+
+    //New nodes
+    Node & nodeP2 = dag.getNodeByPosition(nodeId);//NodeId
+    Node nodeS1 = Node(idVector[0], Type::T_Segment, dagSize+2, dagSize+3);//dagSize
+    Node A = Node(idVector[3], Type::T_Trapezoid);//dagSize+1
+    Node B = Node(idVector[4], Type::T_Trapezoid);//dagSize+2
+    Node C = Node(idVector[5], Type::T_Trapezoid);//dagSize+3
+
+    nodeP2.setType(Type::T_Point);
+    nodeP2.setElement(idVector[2]);
+    nodeP2.setLeftChild(dagSize);
+    nodeP2.setRightChild(dagSize+1);
+
+    //Adding the new nodes and updating the id in the trapezoid
+    dag.addNode(nodeS1);
+    map.getTrapezoidByPosition(idVector[3]).setNodeId(dag.addNode(A));
+    map.getTrapezoidByPosition(idVector[4]).setNodeId(dag.addNode(B));
+    map.getTrapezoidByPosition(idVector[5]).setNodeId(dag.addNode(C));
+}
+
+/**
  * @brief updateDagDifferentTrapezoid Update the dag when the end-points of the segment are not in the same trapezoid
  * @param map Map
  * @param dag Dag

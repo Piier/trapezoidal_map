@@ -79,4 +79,21 @@ unsigned long xorshf96() {
 
    return z;
 }
+
+/**
+  @note https://stackoverflow.com/questions/17333/what-is-the-most-effective-way-for-float-and-double-comparison
+ * @brief pointEssentiallyEqual
+ * @param a Point a
+ * @param b Point b
+ * @return True if the points are the same
+ */
+bool pointEssentiallyEqual(cg3::Point2d a, cg3::Point2d b)
+{
+    if(std::fabs(a.x() - b.x()) <= std::numeric_limits<double>::epsilon()){
+        if(std::fabs(a.y() - b.y()) <= std::numeric_limits<double>::epsilon())
+            return true;
+    }
+
+    return false;
+}
 }

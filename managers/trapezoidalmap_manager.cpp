@@ -274,6 +274,7 @@ void TrapezoidalMapManager::clearTrapezoidalMap()
 
     dMap.clear();
     dag.clear();
+    dMap.setQuery(SIZE_MAX);
     //#####################################################################
 }
 
@@ -522,6 +523,9 @@ void TrapezoidalMapManager::on_loadSegmentsButton_clicked() //Do not write code 
         //Clear current data
         clearTrapezoidalMap();
         drawableTrapezoidalMapDataset.clear();
+        dMap.clear();
+        dag.clear();
+        dMap.setQuery(SIZE_MAX);
 
         //Load input segments in the vector (deleting the previous ones)
         std::vector<cg3::Segment2d> segments = FileUtils::getSegmentsFromFile(filename.toStdString());
@@ -578,6 +582,7 @@ void TrapezoidalMapManager::on_randomSegmentsButton_clicked() //Do not write cod
     drawableTrapezoidalMapDataset.clear();
     dMap.clear();
     dag.clear();
+    dMap.setQuery(SIZE_MAX);
 
     for (const cg3::Segment2d& segment : segments) {
         bool insertedSegment;
@@ -629,6 +634,9 @@ void TrapezoidalMapManager::on_clearSegmentsButton_clicked() //Do not write code
     //Clear current data
     clearTrapezoidalMap();
     drawableTrapezoidalMapDataset.clear();
+    dMap.clear();
+    dag.clear();
+    dMap.setQuery(SIZE_MAX);
 
     updateCanvas();
 
