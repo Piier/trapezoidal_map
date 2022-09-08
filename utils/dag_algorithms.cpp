@@ -174,7 +174,172 @@ void updateDagDifferentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size
             k++;
 
         i++;
-    }}
+    }
+}
+
+/**
+ * @brief updateDagDifferentTrapezoid Update the dag when the end-points of the segment are not in the same trapezoid and the right end-point is already in
+ * @param map Map
+ * @param dag Dag
+ * @param intersected The id of intersected trapezoid
+ * @param upper The id of the new trapezoid above the segment
+ * @param lower The id of the new trapezoid under the segment
+ * @param ids The id of the new points and segment
+ */
+void updateDagDifferentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+
+    Node segment = Node(ids[2], Type::T_Segment);
+    Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
+    std::vector<size_t> segmentId = std::vector<size_t>();
+
+    //Update the trapezoid nodes into point nodes
+    size_t idLeftPoint = map.getTrapezoidByPosition(intersected[0]).getNodeId();
+    size_t idRightPoint = map.getTrapezoidByPosition(intersected.back()).getNodeId();//In this case is a segment
+    dag.getNodeByPosition(idLeftPoint).setElementAndType(ids[0],Type::T_Point);
+    dag.getNodeByPosition(idRightPoint).setElementAndType(ids[2],Type::T_Segment);
+
+    //Inserting and updating the new segment nodes
+    size_t i = 1;
+    segmentId.push_back(dag.addNode(segment));//The first new segment node
+    //Here i update the trapezoid nodes of the internal intersectd trapezoid into segment nodes
+    while(i<intersected.size()-1){
+        dag.getNodeByPosition(map.getTrapezoidByPosition(intersected[i]).getNodeId()).setElementAndType(ids[2], Type::T_Segment);
+        i++;
+    }
+
+
+
+    //Inserting the new Trapezoid nodes
+    map.getTrapezoidByPosition(intersected[0]).setNodeId(dag.addNode(trapezoid));//First trapezoid
+    //Inserting the upper and lower trapezoid nodes
+    i=0;
+    while(i<upper.size()){
+        trapezoid.setElement(upper[i]);
+        map.getTrapezoidByPosition(upper[i]).setNodeId(dag.addNode(trapezoid));
+        i++;
+    }
+    i=0;
+    while(i<lower.size()){
+        trapezoid.setElement(lower[i]);
+        map.getTrapezoidByPosition(lower[i]).setNodeId(dag.addNode(trapezoid));
+        i++;
+    }
+
+    //Now i set the children
+    //First sub-tree (where left end-point lies)
+
+    dag.getNodeByPosition(idLeftPoint).setChildren(map.getTrapezoidByPosition(intersected[0]).getNodeId(), segmentId[0]);
+    dag.getNodeByPosition(segmentId[0]).setChildren(map.getTrapezoidByPosition(upper[0]).getNodeId(), map.getTrapezoidByPosition(lower[0]).getNodeId());
+    //last sub-tree (where right end-pointlies)
+    dag.getNodeByPosition(idRightPoint).setChildren(map.getTrapezoidByPosition(upper.back()).getNodeId(), map.getTrapezoidByPosition(lower.back()).getNodeId());
+
+    //Internal sub-trees
+    i=1;//While
+    size_t j=0;//Upper
+    size_t k=0;//Lower
+
+    double x;
+    if(map.getPointByPosition(map.getTrapezoidByPosition(upper[0]).getRight()).x()<map.getPointByPosition(map.getTrapezoidByPosition(lower[0]).getRight()).x())
+        j++;
+    else
+        k++;
+    while(i<intersected.size()-1){
+
+
+        dag.getNodeByPosition(map.getTrapezoidByPosition(intersected[i]).getNodeId()).setChildren(map.getTrapezoidByPosition(upper[j]).getNodeId(), map.getTrapezoidByPosition(lower[k]).getNodeId());
+
+        x = map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x();
+        if(map.getPointByPosition(map.getTrapezoidByPosition(upper[j]).getRight()).x()==x)
+            j++;
+        if(map.getPointByPosition(map.getTrapezoidByPosition(lower[k]).getRight()).x()==x)
+            k++;
+
+        i++;
+    }
+}
+
+/**
+ * @brief updateDagDifferentTrapezoid Update the dag when the end-points of the segment are not in the same trapezoid and the left end-point is already in
+ * @param map Map
+ * @param dag Dag
+ * @param intersected The id of intersected trapezoid
+ * @param upper The id of the new trapezoid above the segment
+ * @param lower The id of the new trapezoid under the segment
+ * @param ids The id of the new points and segment
+ */
+void updateDagDifferentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+
+    Node segment = Node(ids[2], Type::T_Segment);
+    Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
+    std::vector<size_t> segmentId = std::vector<size_t>();
+
+    //Update the trapezoid nodes into point nodes
+    size_t idLeftPoint = map.getTrapezoidByPosition(intersected[0]).getNodeId();//In this case is a segment
+    size_t idRightPoint = map.getTrapezoidByPosition(intersected.back()).getNodeId();;
+    dag.getNodeByPosition(idLeftPoint).setElementAndType(ids[2],Type::T_Segment);
+    dag.getNodeByPosition(idRightPoint).setElementAndType(ids[1],Type::T_Point);
+
+    //Inserting and updating the new segment nodes
+    size_t i = 1;
+
+    //Here i update the trapezoid nodes of the internal intersectd trapezoid into segment nodes
+    while(i<intersected.size()-1){
+        dag.getNodeByPosition(map.getTrapezoidByPosition(intersected[i]).getNodeId()).setElementAndType(ids[2], Type::T_Segment);
+        i++;
+    }
+    segmentId.push_back(dag.addNode(segment));// The last new segment node
+
+
+    //Inserting the new Trapezoid nodes
+    //Inserting the upper and lower trapezoid nodes
+    i=0;
+    while(i<upper.size()){
+        trapezoid.setElement(upper[i]);
+        map.getTrapezoidByPosition(upper[i]).setNodeId(dag.addNode(trapezoid));
+        i++;
+    }
+    i=0;
+    while(i<lower.size()){
+        trapezoid.setElement(lower[i]);
+        map.getTrapezoidByPosition(lower[i]).setNodeId(dag.addNode(trapezoid));
+        i++;
+    }
+    trapezoid.setElement(intersected.back());
+    map.getTrapezoidByPosition(intersected.back()).setNodeId(dag.addNode(trapezoid));//Last trapezoid
+
+    //Now i set the children
+    //First sub-tree (where left end-point lies)
+
+    dag.getNodeByPosition(idLeftPoint).setChildren(map.getTrapezoidByPosition(upper[0]).getNodeId(), map.getTrapezoidByPosition(lower[0]).getNodeId());
+    //last sub-tree (where right end-pointlies)
+    dag.getNodeByPosition(idRightPoint).setChildren(segmentId[0], map.getTrapezoidByPosition(intersected.back()).getNodeId());
+    dag.getNodeByPosition(segmentId[0]).setChildren(map.getTrapezoidByPosition(upper.back()).getNodeId(), map.getTrapezoidByPosition(lower.back()).getNodeId());
+
+    //Internal sub-trees
+    i=1;//While
+    size_t j=0;//Upper
+    size_t k=0;//Lower
+
+    double x;
+    if(map.getPointByPosition(map.getTrapezoidByPosition(upper[0]).getRight()).x()<map.getPointByPosition(map.getTrapezoidByPosition(lower[0]).getRight()).x())
+        j++;
+    else
+        k++;
+    while(i<intersected.size()-1){
+
+
+        dag.getNodeByPosition(map.getTrapezoidByPosition(intersected[i]).getNodeId()).setChildren(map.getTrapezoidByPosition(upper[j]).getNodeId(), map.getTrapezoidByPosition(lower[k]).getNodeId());
+
+        x = map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x();
+        if(map.getPointByPosition(map.getTrapezoidByPosition(upper[j]).getRight()).x()==x)
+            j++;
+        if(map.getPointByPosition(map.getTrapezoidByPosition(lower[k]).getRight()).x()==x)
+            k++;
+
+        i++;
+    }
+}
+
 
 /**
  * @brief queryDag Perform a search in the Dag
