@@ -94,6 +94,31 @@ void updateDagSameTrapezoidSamePointP(TrapezoidalMap & map, Dag &dag, size_t nod
 }
 
 /**
+ * @brief updateDagSameTrapezoid Update the dag when the end-points of the segment are in the same trapezoid and the end-points are already in the map
+ * @param dag The dag
+ * @param nodeId The position of the node in the dag
+ * @param idVector A vector of the ids of the elements in the trapezoidal map
+ */
+void updateDagSameTrapezoidSamePointPQ(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+
+    size_t dagSize = dag.getSize();
+
+    //New nodes
+    Node & nodeS1 = dag.getNodeByPosition(nodeId);//NodeId
+    Node A = Node(idVector[3], Type::T_Trapezoid);//dagSize+1
+    Node B = Node(idVector[4], Type::T_Trapezoid);//dagSize+2
+
+    nodeS1.setType(Type::T_Segment);
+    nodeS1.setElement(idVector[0]);
+    nodeS1.setLeftChild(dagSize);
+    nodeS1.setRightChild(dagSize+1);
+
+    //Adding the new nodes and updating the id in the trapezoid
+    map.getTrapezoidByPosition(idVector[3]).setNodeId(dag.addNode(A));
+    map.getTrapezoidByPosition(idVector[4]).setNodeId(dag.addNode(B));
+}
+
+/**
  * @brief updateDagDifferentTrapezoid Update the dag when the end-points of the segment are not in the same trapezoid
  * @param map Map
  * @param dag Dag

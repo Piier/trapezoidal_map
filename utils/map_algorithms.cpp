@@ -13,8 +13,46 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     bool samePointP2=AlgorithmsUtils::pointEssentiallyEqual((map.getPointByPosition(map.getTrapezoidByPosition(t2).getRight())),tempSegment.p2());
 
 
+    //end-points already in the map
+    if(samePointP1 && samePointP2){
+        size_t tP1, tP2;
+
+        //Finding the true trapezoid for the left end-point
+        if(map.getTrapezoidByPosition(t1).getAdjTopRight()==SIZE_MAX){
+            tP1= map.getTrapezoidByPosition(t1).getAdjBottomRight();
+        }else{
+            cg3::Segment2d &divider = map.getSegmentByPosition(map.getTrapezoidByPosition(map.getTrapezoidByPosition(t1).getAdjTopRight()).getBottom());
+            if(AlgorithmsUtils::isPointOnTheLeft(divider.p1(), divider.p2(), tempSegment.p2())){
+                tP1=map.getTrapezoidByPosition(t1).getAdjTopRight();
+            }else{
+                tP1=map.getTrapezoidByPosition(t1).getAdjBottomRight();
+            }
+        }
+
+        //Finding the true trapezoid for the right end-point
+        if(map.getTrapezoidByPosition(t2).getAdjTopRight()!=SIZE_MAX && map.getTrapezoidByPosition(t2).getAdjBottomRight()!=SIZE_MAX){
+            tP2=t2;
+        }else{
+            cg3::Segment2d &divider = map.getSegmentByPosition(map.getTrapezoidByPosition(t2).getTop());
+            if(AlgorithmsUtils::isPointOnTheLeft(divider.p1(), divider.p2(), tempSegment.p1())){
+                tP2=map.getTrapezoidByPosition(map.getTrapezoidByPosition(t2).getAdjBottomRight()).getAdjTopLeft();
+            }else{
+                tP2=t2;
+            }
+        }
+
+        //Same trapezoid
+        if(tP2==tP1)
+            sameTrapezoidSamePointPQ(map, tempSegment, tP1, dag, map.getTrapezoidByPosition(tP1).getNodeId());
+        else
+            std::cout<<"different"<<std::endl;
+
+
+
+    }
+
     //Right end-point is the same as another point
-    if(samePointP2){
+    if(samePointP2 && !samePointP1){
         //Same trapezoid
         if(t1==t2 || AlgorithmsUtils::pointEssentiallyEqual((map.getPointByPosition(map.getTrapezoidByPosition(t1).getRight())),tempSegment.p2())){
             sameTrapezoidSamePointQ(map, tempSegment, t1, dag, map.getTrapezoidByPosition(t1).getNodeId());
@@ -27,7 +65,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     }
 
     //Left end-point is the same as another point
-    if(samePointP1){
+    if(samePointP1 && !samePointP2){
         //Same trapezoid
         if(map.getTrapezoidByPosition(t1).getRight()==map.getTrapezoidByPosition(t2).getLeft()){
             sameTrapezoidSamePointP(map, tempSegment, t2, dag, map.getTrapezoidByPosition(t2).getNodeId());
@@ -52,9 +90,11 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
 
     }
 
+    //Same trapezoids
     if(t1==t2 && !samePointP1 && !samePointP2){
         sameTrapezoid(map, tempSegment, t1, dag, map.getTrapezoidByPosition(t1).getNodeId());
     }
+    //Different trapezoids
     if(t1!=t2 && !samePointP1 && !samePointP2){
             std::vector<size_t> intersected = std::vector<size_t>();
             intersected.push_back(t1);
@@ -839,6 +879,59 @@ void sameTrapezoidSamePointP(TrapezoidalMap &map, const cg3::Segment2d &segment,
 
     //Update dag
     DagAlgorithms::updateDagSameTrapezoidSamePointP(map, dag, nodeId, idVector);
+}
+
+/**
+ * @brief sameTrapezoid Update the trapezoidal map and the dag when the end-points of the segment are in the same trapezoid and th end-points are already in
+ * @param map The map
+ * @param segment The segment
+ * @param trapezoidAId The position of the trapezoid in the map
+ * @param dag The dag
+ * @param nodeId The position of the node in the dag
+ */
+void sameTrapezoidSamePointPQ(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t trapezoidAId, Dag & dag, size_t nodeId){
+
+    std::vector<size_t> idVector = std::vector<size_t>();
+    Trapezoid t = map.getTrapezoidByPosition(trapezoidAId);
+
+    //Adding the segment, points and trapezoids in the map
+    size_t segmentId = map.addSegment(segment);
+    size_t point1Id = map.getTrapezoidByPosition(trapezoidAId).getLeft();
+    size_t point2Id = map.getTrapezoidByPosition(trapezoidAId).getRight();
+
+    size_t trapezoidBId = map.addTrapezoid(Trapezoid(point1Id, point2Id, segmentId, t.getBottom()));
+
+
+    idVector.push_back(segmentId);
+    idVector.push_back(point1Id);
+    idVector.push_back(point2Id);
+    idVector.push_back(trapezoidAId);
+    idVector.push_back(trapezoidBId);
+
+    //Manipulating the trapezoids
+    Trapezoid & trapezoidA = map.getTrapezoidByPosition(trapezoidAId);
+    Trapezoid & trapezoidB = map.getTrapezoidByPosition(trapezoidBId);
+
+    if(trapezoidA.getAdjBottomLeft()!=SIZE_MAX){
+        map.getTrapezoidByPosition(trapezoidA.getAdjBottomLeft()).setAdjBottomRight(trapezoidBId);
+    }
+
+    if(trapezoidA.getAdjBottomRight()!=SIZE_MAX){
+        map.getTrapezoidByPosition(trapezoidA.getAdjBottomRight()).setAdjBottomLeft(trapezoidBId);
+    }
+
+
+    trapezoidB.setAdjTopLeft(SIZE_MAX);
+    trapezoidB.setAdjBottomLeft(trapezoidA.getAdjBottomLeft());
+    trapezoidB.setAdjTopRight(SIZE_MAX);
+    trapezoidB.setAdjBottomRight(trapezoidA.getAdjBottomRight());
+
+    trapezoidA.setAdjBottomLeft(SIZE_MAX);
+    trapezoidA.setAdjBottomRight(SIZE_MAX);
+    trapezoidA.setBottom(segmentId);
+
+    //Update dag
+    DagAlgorithms::updateDagSameTrapezoidSamePointPQ(map, dag, nodeId, idVector);
 }
 
 }
