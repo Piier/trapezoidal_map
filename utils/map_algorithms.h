@@ -15,6 +15,7 @@ namespace MapAlgorithms {
     void differentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment);
     void differentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment);
     void differentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment);
+    void differentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment);
 
     void deleteIntersectedTrapezoid(TrapezoidalMap & map, std::vector<size_t> &intersected);
 
@@ -24,6 +25,8 @@ namespace MapAlgorithms {
     void addNewTopTrapezoidsSamePointQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId);
     void addNewBottomTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId);
     void addNewTopTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId);
+    void addNewBottomTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId);
+    void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId);
 
 }
 
