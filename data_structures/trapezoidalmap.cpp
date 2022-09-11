@@ -68,14 +68,11 @@ cg3::Segment2d& TrapezoidalMap::getSegmentByPosition(const size_t position){
 }
 
 /**
- * @brief TrapezoidalMap::getTrapezoidByPosition Get a trapezoid pointer by is position if it isn't deleted
+ * @brief TrapezoidalMap::getTrapezoidByPosition Get a trapezoid pointer by is position
  * @param position The trapezoid position
- * @return The pointer to the trapezoid at the given position or nullptr
+ * @return The pointer to the trapezoid at the given position
  */
 Trapezoid& TrapezoidalMap::getTrapezoidByPosition(const size_t position){
-    if(trapezoidsTable[position].isDeleted())
-        return trapezoidsTable[SIZE_MAX];;
-
     return trapezoidsTable[position];
 }
 
@@ -87,6 +84,15 @@ Trapezoid& TrapezoidalMap::getTrapezoidByPosition(const size_t position){
 size_t TrapezoidalMap::trapezoidVectorSize(){
     return trapezoidsTable.size();
 }
+
+/**
+ * @brief TrapezoidalMap::trapezoidVectorSize Return he size of the vector that contains the points
+ * @return The size of the vector that contains the trapezoids
+ */
+size_t TrapezoidalMap::pointVectorSize(){
+    return pointsTable.size();
+}
+
 
 
 void TrapezoidalMap::clear(){

@@ -2,6 +2,12 @@
 
 namespace MapAlgorithms {
 
+/**
+ * @brief addSegmentToMap Add a segment to tha map and update the dag
+ * @param map Map
+ * @param dag Dag
+ * @param segment Segment
+ */
 void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segment){
     cg3::Segment2d tempSegment = cg3::Segment2d();
 
@@ -12,54 +18,27 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     bool samePointP1=AlgorithmsUtils::pointEssentiallyEqual((map.getPointByPosition(map.getTrapezoidByPosition(t1).getRight())),tempSegment.p1());
     bool samePointP2=AlgorithmsUtils::pointEssentiallyEqual((map.getPointByPosition(map.getTrapezoidByPosition(t2).getRight())),tempSegment.p2());
 
+    if(samePointP1)
+        t1=findRealLeft(map, map.getTrapezoidByPosition(t1).getRight(), tempSegment);
 
     //end-points already in the map
     if(samePointP1 && samePointP2){
-        size_t tP1, tP2;
-
-        //Finding the true trapezoid for the left end-point
-        if(map.getTrapezoidByPosition(t1).getAdjTopRight()==SIZE_MAX){
-            tP1= map.getTrapezoidByPosition(t1).getAdjBottomRight();
-        }else{
-            cg3::Segment2d &divider = map.getSegmentByPosition(map.getTrapezoidByPosition(map.getTrapezoidByPosition(t1).getAdjTopRight()).getBottom());
-            if(AlgorithmsUtils::isPointOnTheLeft(divider.p1(), divider.p2(), tempSegment.p2())){
-                tP1=map.getTrapezoidByPosition(t1).getAdjTopRight();
-            }else{
-                tP1=map.getTrapezoidByPosition(t1).getAdjBottomRight();
-            }
-        }
-
-        //Finding the true trapezoid for the right end-point
-        if(map.getTrapezoidByPosition(t2).getAdjTopRight()!=SIZE_MAX && map.getTrapezoidByPosition(t2).getAdjBottomRight()!=SIZE_MAX){
-            tP2=t2;
-        }else{
-            cg3::Segment2d &divider = map.getSegmentByPosition(map.getTrapezoidByPosition(t2).getTop());
-            if(AlgorithmsUtils::isPointOnTheLeft(divider.p1(), divider.p2(), tempSegment.p1())){
-                tP2=map.getTrapezoidByPosition(map.getTrapezoidByPosition(t2).getAdjBottomRight()).getAdjTopLeft();
-            }else{
-                tP2=t2;
-            }
-        }
-
         //Same trapezoid
-        if(tP2==tP1)
-            sameTrapezoidSamePointPQ(map, tempSegment, tP1, dag, map.getTrapezoidByPosition(tP1).getNodeId());
+        if(t2==t1 || map.getTrapezoidByPosition(t1).getRight() == map.getTrapezoidByPosition(t2).getRight())
+            sameTrapezoidSamePointPQ(map, tempSegment, t1, dag, map.getTrapezoidByPosition(t1).getNodeId());
         else{
             std::vector<size_t> intersected = std::vector<size_t>();
-            intersected.push_back(tP1);
+            intersected.push_back(t1);
             AlgorithmsUtils::followSegment(map, tempSegment, intersected);
             differentTrapezoidSamePointPQ(map, dag, intersected, tempSegment);
         }
-
-
-
-
     }
+
 
     //Right end-point is the same as another point
     if(samePointP2 && !samePointP1){
         //Same trapezoid
-        if(t1==t2 || AlgorithmsUtils::pointEssentiallyEqual((map.getPointByPosition(map.getTrapezoidByPosition(t1).getRight())),tempSegment.p2())){
+        if(t1==t2 || map.getTrapezoidByPosition(t1).getRight() == map.getTrapezoidByPosition(t2).getRight() ){
             sameTrapezoidSamePointQ(map, tempSegment, t1, dag, map.getTrapezoidByPosition(t1).getNodeId());
         }else{
             std::vector<size_t> intersected = std::vector<size_t>();
@@ -72,23 +51,11 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     //Left end-point is the same as another point
     if(samePointP1 && !samePointP2){
         //Same trapezoid
-        if(map.getTrapezoidByPosition(t1).getRight()==map.getTrapezoidByPosition(t2).getLeft()){
+        if(map.getTrapezoidByPosition(t1).getRight()==map.getTrapezoidByPosition(t2).getRight()){
             sameTrapezoidSamePointP(map, tempSegment, t2, dag, map.getTrapezoidByPosition(t2).getNodeId());
         }else{//Different trapezoid
-
             std::vector<size_t> intersected = std::vector<size_t>();
-            if(map.getTrapezoidByPosition(t1).getAdjTopRight()==SIZE_MAX){
-                intersected.push_back(map.getTrapezoidByPosition(t1).getAdjBottomRight());
-            }else{
-                //Segmet that start from left-end point
-                cg3::Segment2d &divider = map.getSegmentByPosition(map.getTrapezoidByPosition(map.getTrapezoidByPosition(t1).getAdjTopRight()).getBottom());
-
-                if(AlgorithmsUtils::isPointOnTheLeft(divider.p1(), divider.p2(), tempSegment.p2())){
-                    intersected.push_back(map.getTrapezoidByPosition(t1).getAdjTopRight());
-                }else{
-                    intersected.push_back(map.getTrapezoidByPosition(t1).getAdjBottomRight());
-                }
-            }
+            intersected.push_back(t1);
             AlgorithmsUtils::followSegment(map, tempSegment, intersected);
             differentTrapezoidSamePointP(map, dag, intersected, tempSegment);
         }
@@ -953,8 +920,8 @@ void differentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::vector<si
 
     //Adding the segment and points in the map
     size_t segmentId = map.addSegment(segment);
-    size_t point1Id = map.addPoint(segment.p1());
-    size_t point2Id = map.addPoint(segment.p2());
+    size_t point1Id = map.getTrapezoidByPosition(intersected[0]).getLeft();
+    size_t point2Id = map.getTrapezoidByPosition(intersected.back()).getRight();
     ids.push_back(point1Id);
     ids.push_back(point2Id);
     ids.push_back(segmentId);
@@ -1135,5 +1102,52 @@ void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &i
             upper.push_back(map.addTrapezoid(temp));
 }
 
+
+/**
+ * @brief findRealLeft Returns the true trapezoid to which a point belongs (used when the searched point is the same left point of more than 1 trapezoid)
+ * @param map Map
+ * @param point The position the the dag of the search point
+ * @param segment The segment
+ * @return The true trapezoid to which the point belongs
+ */
+size_t findRealLeft(TrapezoidalMap & map, size_t point, cg3::Segment2d& segment){
+
+    std::vector<size_t> trapezoidCandidates = std::vector<size_t>();
+    size_t i =0;
+
+    while(i<map.trapezoidVectorSize()){
+        if(!map.getTrapezoidByPosition(i).isDeleted()){
+            if(map.getTrapezoidByPosition(i).getLeft()==point)
+                trapezoidCandidates.push_back(i);
+        }
+        i++;
+    }
+
+    //If there is only one,it is that
+    if(trapezoidCandidates.size()==1)
+        return trapezoidCandidates[0];
+
+    for(size_t i : trapezoidCandidates){
+
+        bool tP1=AlgorithmsUtils::pointEssentiallyEqual(map.getSegmentByPosition(map.getTrapezoidByPosition(i).getTop()).p1(), segment.p1());
+        bool bP1=AlgorithmsUtils::pointEssentiallyEqual(map.getSegmentByPosition(map.getTrapezoidByPosition(i).getBottom()).p1(), segment.p1());
+
+        if(bP1 && tP1){
+            //The segment should be between the top and the bottom
+            if(!AlgorithmsUtils::isPointOnTheLeft(segment.p1(), segment.p2(), map.getSegmentByPosition(map.getTrapezoidByPosition(i).getBottom()).p2()) &&
+                AlgorithmsUtils::isPointOnTheLeft(segment.p1(), segment.p2(), map.getSegmentByPosition(map.getTrapezoidByPosition(i).getTop()).p2()))
+                return i;
+        }else
+            if(bP1){//The segment should be between above bottom
+                if(!AlgorithmsUtils::isPointOnTheLeft(segment.p1(), segment.p2(), map.getSegmentByPosition(map.getTrapezoidByPosition(i).getBottom()).p2()))
+                    return i;
+            }else{//The segment shoul be under the top
+                if(AlgorithmsUtils::isPointOnTheLeft(segment.p1(), segment.p2(), map.getSegmentByPosition(map.getTrapezoidByPosition(i).getTop()).p2()))
+                    return i;
+            }
+    }
+
+    return SIZE_MAX;
+}
 
 }
