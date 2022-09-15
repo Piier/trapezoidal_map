@@ -16,21 +16,37 @@ void DrawableTrapezoidalMap::draw() const{
     for(const Trapezoid& trapezoid : trapezoidsTable){      
         if(!trapezoid.isDeleted()){
 
-            std::array<cg3::Point2d, 4> vertices = {cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getLeft()].x())),
-                                                    cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getRight()].x())),
-                                                    cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getRight()].x())),
-                                                    cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getLeft()].x()))};
+            //Triangle with bottom and top with the same left end-point
+            if(AlgorithmsUtils::pointEssentiallyEqual(segmentsTable[trapezoid.getBottom()].p1(), segmentsTable[trapezoid.getTop()].p1())){
 
-            cg3::opengl::drawLine2(vertices[0],vertices[3], black, 1);
-            cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
-            cg3::Color c;
+                std::array<cg3::Point2d, 3> vertices = {pointsTable[trapezoid.getLeft()],
+                                                        cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()] ,pointsTable[trapezoid.getRight()].x())),
+                                                        cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()] ,pointsTable[trapezoid.getRight()].x())),
+                                                       };
+                cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
+                cg3::opengl::drawTriangle2(vertices, i==query ? black : colors[i], 1, true);
 
-            if((query!=SIZE_MAX) && (i==trapezoidsTable[query].getAdjBottomLeft() || i==trapezoidsTable[query].getAdjBottomRight() || i==trapezoidsTable[query].getAdjTopLeft() || i==trapezoidsTable[query].getAdjTopRight()))
-            {c= cg3::Color(255,0,0);}
-             else{
-                    c=colors[i];
+            }else//Same right end-point
+                if(AlgorithmsUtils::pointEssentiallyEqual(segmentsTable[trapezoid.getBottom()].p2(), segmentsTable[trapezoid.getTop()].p2())){
+
+                    std::array<cg3::Point2d, 3> vertices = {pointsTable[trapezoid.getRight()],
+                                                            cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()] ,pointsTable[trapezoid.getLeft()].x())),
+                                                            cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()] ,pointsTable[trapezoid.getLeft()].x())),
+                                                           };
+                    cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
+                    cg3::opengl::drawTriangle2(vertices, i==query ? black : colors[i], 1, true);
+
+                }else{//Trapezoid
+                    std::array<cg3::Point2d, 4> vertices = {cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getLeft()].x())),
+                                                            cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getTop()], pointsTable[trapezoid.getRight()].x())),
+                                                            cg3::Point2d(pointsTable[trapezoid.getRight()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getRight()].x())),
+                                                            cg3::Point2d(pointsTable[trapezoid.getLeft()].x(), AlgorithmsUtils::getYGivenX(segmentsTable[trapezoid.getBottom()], pointsTable[trapezoid.getLeft()].x()))};
+
+                    cg3::opengl::drawLine2(vertices[0],vertices[3], black, 1);
+                    cg3::opengl::drawLine2(vertices[1],vertices[2], black, 1);
+                    cg3::opengl::drawQuad2(vertices, i==query ? black : colors[i], 1, true);
                 }
-            cg3::opengl::drawQuad2(vertices, i==query ? black : c, 1, true);
+
         }
         i++;
     }
