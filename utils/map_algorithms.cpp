@@ -84,7 +84,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
  * @param intersected Intersected trapezoid
  * @param segment Segment
  */
-void differentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
+void differentTrapezoid(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> &intersected, const cg3::Segment2d &segment){
     std::vector<size_t> upper = std::vector<size_t>();
     std::vector<size_t> lower = std::vector<size_t>();
     std::vector<size_t> ids = std::vector<size_t>();
@@ -127,7 +127,7 @@ void differentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &inte
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewBottomTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewBottomTrapezoids(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &lower, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -198,7 +198,7 @@ void addNewBottomTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersect
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewTopTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewTopTrapezoids(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &upper, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -272,7 +272,7 @@ void addNewTopTrapezoids(TrapezoidalMap & map, std::vector<size_t> &intersected,
  * @param intersected Intersected trapezoid
  * @param segment Segment
  */
-void differentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
+void differentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> &intersected, const cg3::Segment2d &segment){
     std::vector<size_t> upper = std::vector<size_t>();
     std::vector<size_t> lower = std::vector<size_t>();
     std::vector<size_t> ids = std::vector<size_t>();
@@ -312,7 +312,7 @@ void differentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::vector<siz
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewBottomTrapezoidsSamePointQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewBottomTrapezoidsSamePointQ(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &lower, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -386,7 +386,7 @@ void addNewBottomTrapezoidsSamePointQ(TrapezoidalMap & map, std::vector<size_t> 
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewTopTrapezoidsSamePointQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewTopTrapezoidsSamePointQ(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &upper, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -462,7 +462,7 @@ void addNewTopTrapezoidsSamePointQ(TrapezoidalMap & map, std::vector<size_t> &in
  * @param intersected Intersected trapezoid
  * @param segment Segment
  */
-void differentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
+void differentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> &intersected, const cg3::Segment2d &segment){
     std::vector<size_t> upper = std::vector<size_t>();
     std::vector<size_t> lower = std::vector<size_t>();
     std::vector<size_t> ids = std::vector<size_t>();
@@ -501,7 +501,7 @@ void differentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::vector<siz
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewBottomTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewBottomTrapezoidsSamePointP(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &lower, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -579,7 +579,7 @@ void addNewBottomTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> 
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewTopTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewTopTrapezoidsSamePointP(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &upper, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -656,7 +656,7 @@ void addNewTopTrapezoidsSamePointP(TrapezoidalMap & map, std::vector<size_t> &in
  * @param map
  * @param intersected
  */
-void deleteIntersectedTrapezoid(TrapezoidalMap & map, std::vector<size_t> &intersected){
+void deleteIntersectedTrapezoid(TrapezoidalMap & map, const std::vector<size_t> &intersected){
     size_t i = 1;
     while(i<intersected.size()-1){
         map.getTrapezoidByPosition(intersected[i]).setDeleted();
@@ -673,7 +673,7 @@ void deleteIntersectedTrapezoid(TrapezoidalMap & map, std::vector<size_t> &inter
  * @param dag The dag
  * @param nodeId The position of the node in the dag
  */
-void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t trapezoidAId, Dag & dag, size_t nodeId){
+void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, const size_t trapezoidAId, Dag & dag, const size_t nodeId){
 
 
     std::vector<size_t> idVector = std::vector<size_t>();
@@ -740,7 +740,7 @@ void sameTrapezoid(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t tr
  * @param dag The dag
  * @param nodeId The position of the node in the dag
  */
-void sameTrapezoidSamePointQ(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t trapezoidAId, Dag & dag, size_t nodeId){
+void sameTrapezoidSamePointQ(TrapezoidalMap &map, const cg3::Segment2d &segment, const size_t trapezoidAId, Dag & dag, const size_t nodeId){
 
     std::vector<size_t> idVector = std::vector<size_t>();
     Trapezoid t = map.getTrapezoidByPosition(trapezoidAId);
@@ -800,7 +800,7 @@ void sameTrapezoidSamePointQ(TrapezoidalMap &map, const cg3::Segment2d &segment,
  * @param dag The dag
  * @param nodeId The position of the node in the dag
  */
-void sameTrapezoidSamePointP(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t trapezoidAId, Dag & dag, size_t nodeId){
+void sameTrapezoidSamePointP(TrapezoidalMap &map, const cg3::Segment2d &segment, const size_t trapezoidAId, Dag & dag, const size_t nodeId){
 
     std::vector<size_t> idVector = std::vector<size_t>();
     Trapezoid t = map.getTrapezoidByPosition(trapezoidAId);
@@ -861,7 +861,7 @@ void sameTrapezoidSamePointP(TrapezoidalMap &map, const cg3::Segment2d &segment,
  * @param dag The dag
  * @param nodeId The position of the node in the dag
  */
-void sameTrapezoidSamePointPQ(TrapezoidalMap &map, const cg3::Segment2d &segment, size_t trapezoidAId, Dag & dag, size_t nodeId){
+void sameTrapezoidSamePointPQ(TrapezoidalMap &map, const cg3::Segment2d &segment, const size_t trapezoidAId, Dag & dag, const size_t nodeId){
 
     std::vector<size_t> idVector = std::vector<size_t>();
     Trapezoid t = map.getTrapezoidByPosition(trapezoidAId);
@@ -913,7 +913,7 @@ void sameTrapezoidSamePointPQ(TrapezoidalMap &map, const cg3::Segment2d &segment
  * @param intersected Intersected trapezoid
  * @param segment Segment
  */
-void differentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> &intersected, const cg3::Segment2d &segment){
+void differentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> &intersected, const cg3::Segment2d &segment){
     std::vector<size_t> upper = std::vector<size_t>();
     std::vector<size_t> lower = std::vector<size_t>();
     std::vector<size_t> ids = std::vector<size_t>();
@@ -947,7 +947,7 @@ void differentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::vector<si
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewBottomTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &lower, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewBottomTrapezoidsSamePointPQ(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &lower, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -1028,7 +1028,7 @@ void addNewBottomTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t>
  * @param point2Id The position in the map of the right-end point
  * @param segmentId The position in the map of the segment
  */
-void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &intersected, std::vector<size_t> &upper, size_t point1Id, size_t point2Id, size_t segmentId){
+void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &upper, const size_t point1Id, const size_t point2Id, const size_t segmentId){
     size_t i = 0;
     size_t start = 0;
     size_t idNewTrapezoid = map.trapezoidVectorSize();
@@ -1110,7 +1110,7 @@ void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, std::vector<size_t> &i
  * @param segment The segment
  * @return The true trapezoid to which the point belongs
  */
-size_t findRealLeft(TrapezoidalMap & map, size_t point, cg3::Segment2d& segment){
+size_t findRealLeft(TrapezoidalMap & map, const size_t point, const cg3::Segment2d &segment){
 
     std::vector<size_t> trapezoidCandidates = std::vector<size_t>();
     size_t i =0;

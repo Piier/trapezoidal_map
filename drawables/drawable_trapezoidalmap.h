@@ -17,8 +17,8 @@ public:
      double sceneRadius() const;
 
      cg3::Color randColor();
-     void addColors(size_t n);
-     void setQuery(size_t val);
+     void addColors(const size_t n);
+     void setQuery(const size_t val);
 
 };
 

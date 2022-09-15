@@ -54,7 +54,7 @@ void DrawableTrapezoidalMap::draw() const{
 
 /**
  * @brief DrawableTrapezoidalMap::randColor Generate a random color
- * @return A colot
+ * @return A color
  */
 cg3::Color DrawableTrapezoidalMap::randColor(){
     int i = COLOR_UPPER - COLOR_LOWER +1;
@@ -67,7 +67,7 @@ cg3::Color DrawableTrapezoidalMap::randColor(){
  * @brief DrawableTrapezoidalMap::addColors Add colors in the vector
  * @param n Size to reach
  */
-void DrawableTrapezoidalMap::addColors(size_t n){
+void DrawableTrapezoidalMap::addColors(const size_t n){
     size_t i = colors.size();
     while(i<n){
         colors.push_back(randColor());
@@ -75,7 +75,7 @@ void DrawableTrapezoidalMap::addColors(size_t n){
     }
 }
 
-void DrawableTrapezoidalMap::setQuery(size_t val){
+void DrawableTrapezoidalMap::setQuery(const size_t val){
     query=val;
 }
 

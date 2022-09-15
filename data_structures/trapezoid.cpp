@@ -7,18 +7,11 @@
 /**
  * @brief Trapezoid::Trapezoid Constructor that create the bb
  */
-Trapezoid::Trapezoid(){
-      leftp=BB_LEFTP;
-      rightp=BB_RIGHTP;
-      top=BB_TOP;;
-      bottom=BB_BOTTOM;
-      adjBottomLeft=SIZE_MAX;
-      adjBottomRight=SIZE_MAX;
-      adjTopLeft=SIZE_MAX;
-      adjTopRight=SIZE_MAX;
-      deleted=false;
-      nodeId=0;
-}
+Trapezoid::Trapezoid():
+leftp(BB_LEFTP), rightp(BB_RIGHTP), top(BB_TOP), bottom(BB_BOTTOM),
+adjBottomLeft(SIZE_MAX),adjBottomRight(SIZE_MAX),adjTopLeft(SIZE_MAX),adjTopRight(SIZE_MAX),
+deleted(false),nodeId(0)
+{}
 
 /**
  * @brief Trapezoid Constructor with the perimeter
@@ -27,18 +20,11 @@ Trapezoid::Trapezoid(){
  * @param t Top segment
  * @param b Bottom segment
  */
-Trapezoid::Trapezoid(size_t l, size_t r, size_t t, size_t b){
-    leftp=l;
-    rightp=r;
-    top=t;;
-    bottom=b;
-    adjBottomLeft=SIZE_MAX;
-    adjBottomRight=SIZE_MAX;
-    adjTopLeft=SIZE_MAX;
-    adjTopRight=SIZE_MAX;
-    deleted=false;
-    nodeId=0;
-}
+Trapezoid::Trapezoid(const size_t l, const size_t r, const size_t t, const size_t b):
+leftp(l), rightp(r), top(t), bottom(b),
+adjBottomLeft(SIZE_MAX),adjBottomRight(SIZE_MAX),adjTopLeft(SIZE_MAX),adjTopRight(SIZE_MAX),
+deleted(false),nodeId(0)
+{}
 
 //Getters
 size_t Trapezoid::getLeft() const{

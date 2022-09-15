@@ -35,7 +35,7 @@ void checkSegment(const cg3::Segment2d& oldSegment, cg3::Segment2d &newSegment){
  * @param segment The segment
  * @param intersected The vector (it must contain the starting trapezoid) that will contain the trapezoids
  */
-void followSegment(TrapezoidalMap& map, const cg3::Segment2d segment, std::vector<size_t>& intersected){
+void followSegment(TrapezoidalMap &map, const cg3::Segment2d segment, std::vector<size_t>& intersected){
     size_t i = 0;
 
     while(segment.p2().x()>map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x()){
@@ -87,7 +87,7 @@ unsigned long xorshf96() {
  * @param b Point b
  * @return True if the points are the same
  */
-bool pointEssentiallyEqual(cg3::Point2d a, cg3::Point2d b)
+bool pointEssentiallyEqual(const cg3::Point2d a, const cg3::Point2d b)
 {
     if(std::fabs(a.x() - b.x()) <= std::numeric_limits<double>::epsilon()){
         if(std::fabs(a.y() - b.y()) <= std::numeric_limits<double>::epsilon())

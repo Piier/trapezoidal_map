@@ -20,8 +20,8 @@ public:
     cg3::Segment2d& getSegmentByPosition(const size_t position);
     Trapezoid& getTrapezoidByPosition(const size_t position);
 
-    size_t trapezoidVectorSize();
-    size_t pointVectorSize();
+    size_t trapezoidVectorSize() const;
+    size_t pointVectorSize() const;
     void clear();
 };
 

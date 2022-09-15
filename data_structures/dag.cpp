@@ -13,7 +13,7 @@ Dag::Dag(){
  * @param position The position of the node in the dag
  * @return The reference of the node
  */
-Node& Dag::getNodeByPosition(const size_t position){
+Node &Dag::getNodeByPosition(const size_t position){
     return dag[position];
 }
 
@@ -21,7 +21,7 @@ Node& Dag::getNodeByPosition(const size_t position){
  * @brief Dag::getRoot Get a reference to the root node
  * @return The reference to the root node
  */
-Node& Dag::getRoot(){
+Node &Dag::getRoot(){
     return dag[0];
 }
 
@@ -29,7 +29,7 @@ Node& Dag::getRoot(){
  * @brief Dag::getSize Get the size of the dag
  * @return The size of the dag
  */
-size_t Dag::getSize(){
+size_t Dag::getSize() const{
     return dag.size();
 }
 
@@ -37,7 +37,7 @@ size_t Dag::getSize(){
  * @brief Dag::addNode Add a node to the dag
  * @param newNode The node to add
  */
-size_t Dag::addNode(Node &newNode){
+size_t Dag::addNode(const Node &newNode){
     dag.push_back(newNode);
     return dag.size()-1;
 }

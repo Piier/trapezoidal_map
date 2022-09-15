@@ -8,7 +8,7 @@ namespace DagAlgorithms {
  * @param nodeId The position of the node in the dag
  * @param idVector A vector of the ids of the elements in the trapezoidal map
  */
-void updateDagSameTrapezoid(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+void updateDagSameTrapezoid(TrapezoidalMap &map, Dag &dag, const size_t nodeId, const std::vector<size_t> &idVector){
 
     size_t dagSize = dag.getSize();
 
@@ -41,7 +41,7 @@ void updateDagSameTrapezoid(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::
  * @param nodeId The position of the node in the dag
  * @param idVector A vector of the ids of the elements in the trapezoidal map
  */
-void updateDagSameTrapezoidSamePointQ(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+void updateDagSameTrapezoidSamePointQ(TrapezoidalMap & map, Dag &dag, const size_t nodeId, const std::vector<size_t> & idVector){
 
     size_t dagSize = dag.getSize();
 
@@ -70,7 +70,7 @@ void updateDagSameTrapezoidSamePointQ(TrapezoidalMap & map, Dag &dag, size_t nod
  * @param nodeId The position of the node in the dag
  * @param idVector A vector of the ids of the elements in the trapezoidal map
  */
-void updateDagSameTrapezoidSamePointP(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+void updateDagSameTrapezoidSamePointP(TrapezoidalMap & map, Dag &dag, const size_t nodeId, const std::vector<size_t> & idVector){
 
     size_t dagSize = dag.getSize();
 
@@ -99,7 +99,7 @@ void updateDagSameTrapezoidSamePointP(TrapezoidalMap & map, Dag &dag, size_t nod
  * @param nodeId The position of the node in the dag
  * @param idVector A vector of the ids of the elements in the trapezoidal map
  */
-void updateDagSameTrapezoidSamePointPQ(TrapezoidalMap & map, Dag &dag, size_t nodeId, std::vector<size_t> & idVector){
+void updateDagSameTrapezoidSamePointPQ(TrapezoidalMap & map, Dag &dag, const size_t nodeId, const std::vector<size_t> & idVector){
 
     size_t dagSize = dag.getSize();
 
@@ -127,7 +127,7 @@ void updateDagSameTrapezoidSamePointPQ(TrapezoidalMap & map, Dag &dag, size_t no
  * @param lower The id of the new trapezoid under the segment
  * @param ids The id of the new points and segment
  */
-void updateDagDifferentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+void updateDagDifferentTrapezoid(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> &intersected, const std::vector<size_t> &upper, const std::vector<size_t> &lower, const std::vector<size_t> &ids){
 
     Node segment = Node(ids[2], Type::T_Segment);
     Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
@@ -211,7 +211,7 @@ void updateDagDifferentTrapezoid(TrapezoidalMap &map, Dag &dag, std::vector<size
  * @param lower The id of the new trapezoid under the segment
  * @param ids The id of the new points and segment
  */
-void updateDagDifferentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+void updateDagDifferentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> & intersected, const std::vector<size_t> &upper, const std::vector<size_t> &lower, const std::vector<size_t> &ids){
 
     Node segment = Node(ids[2], Type::T_Segment);
     Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
@@ -292,7 +292,7 @@ void updateDagDifferentTrapezoidSamePointQ(TrapezoidalMap &map, Dag &dag, std::v
  * @param lower The id of the new trapezoid under the segment
  * @param ids The id of the new points and segment
  */
-void updateDagDifferentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+void updateDagDifferentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> & intersected, const std::vector<size_t> &upper, const std::vector<size_t> &lower, const std::vector<size_t> &ids){
 
     Node segment = Node(ids[2], Type::T_Segment);
     Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
@@ -374,11 +374,9 @@ void updateDagDifferentTrapezoidSamePointP(TrapezoidalMap &map, Dag &dag, std::v
  * @param lower The id of the new trapezoid under the segment
  * @param ids The id of the new points and segment
  */
-void updateDagDifferentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::vector<size_t> & intersected, std::vector<size_t> &upper, std::vector<size_t> &lower, std::vector<size_t> &ids){
+void updateDagDifferentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, const std::vector<size_t> & intersected, const std::vector<size_t> &upper, const std::vector<size_t> &lower, const std::vector<size_t> &ids){
 
-    Node segment = Node(ids[2], Type::T_Segment);
     Node trapezoid = Node(intersected[0], Type::T_Trapezoid);
-    std::vector<size_t> segmentId = std::vector<size_t>();
 
     //Update the trapezoid nodes into point nodes
     size_t idLeftPoint = map.getTrapezoidByPosition(intersected[0]).getNodeId();//In this case is a segment
@@ -450,7 +448,7 @@ void updateDagDifferentTrapezoidSamePointPQ(TrapezoidalMap &map, Dag &dag, std::
  * @param point The point to search
  * @return The index of the trapezoid in the map
  */
-size_t queryDag(TrapezoidalMap &map, Dag & dag, Node &node, const cg3::Point2d &point){
+size_t queryDag(TrapezoidalMap &map, Dag &dag, const Node &node, const cg3::Point2d &point){
 
     Type type = node.getType();
     //The node is a leaf

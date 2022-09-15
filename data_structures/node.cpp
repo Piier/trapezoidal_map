@@ -1,23 +1,17 @@
 #include "node.h"
 
-Node::Node(){
-    element=SIZE_MAX;
-    type=Type::T_Point;
-    leftChild=SIZE_MAX;
-    rightChild=SIZE_MAX;
-}
+Node::Node():
+element(SIZE_MAX), type(Type::T_Point), leftChild(SIZE_MAX), rightChild(SIZE_MAX)
+{}
 
 /**
  * @brief Node::Node Constuctor
  * @param e Position of the element in the trapezoidal map
  * @param t Type of the element in the trapezoidal map
  */
-Node::Node(const size_t e, Type t){
-    element=e;
-    type=t;
-    leftChild=SIZE_MAX;
-    rightChild=SIZE_MAX;
-}
+Node::Node(const size_t e, const Type t):
+element(e), type(t), leftChild(SIZE_MAX), rightChild(SIZE_MAX)
+{}
 
 /**
  * @brief Node::Node Constructor
@@ -26,12 +20,9 @@ Node::Node(const size_t e, Type t){
  * @param lc Left child in the dag
  * @param rc Right child in the dag
  */
-Node::Node(const size_t e, Type t, size_t lc, size_t rc){
-    element=e;
-    type=t;
-    leftChild=lc;
-    rightChild=rc;
-}
+Node::Node(const size_t e, const Type t, const size_t lc, const size_t rc):
+element(e), type(t), leftChild(lc), rightChild(rc)
+{}
 
 //Getters
 Type Node::getType() const{
@@ -56,7 +47,7 @@ void Node::setElement(const size_t newElement){
     element=newElement;
 }
 
-void Node::setType(Type newType){
+void Node::setType(const Type newType){
     type=newType;
 }
 

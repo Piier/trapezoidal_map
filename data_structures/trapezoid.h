@@ -7,13 +7,13 @@ class Trapezoid{
 private:
     size_t leftp, rightp;
     size_t top, bottom;
-    size_t adjTopRight, adjTopLeft, adjBottomRight, adjBottomLeft;
-    size_t nodeId;
+    size_t adjBottomLeft, adjBottomRight, adjTopLeft, adjTopRight;
     bool deleted;
+    size_t nodeId;
 
 public:
     Trapezoid();
-    Trapezoid(size_t l, size_t r, size_t t, size_t b);
+    Trapezoid(const size_t l, const size_t r, const size_t t, const size_t b);
 
     size_t getLeft() const;
     size_t getRight() const;

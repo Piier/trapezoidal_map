@@ -14,14 +14,14 @@ enum Type{
 class Node{
 
 private:
+    size_t element;
     Type type;
     size_t leftChild, rightChild;
-    size_t element;
 
 public:
     Node();
-    Node(const size_t e, Type t);
-    Node(const size_t e, Type t, size_t lc, size_t rc);
+    Node(const size_t e, const Type t);
+    Node(const size_t e, const Type t, const size_t lc, const size_t rc);
 
     Type getType() const;
     size_t getLeftChild() const;
@@ -29,7 +29,7 @@ public:
     size_t getElement() const;
 
     void setElement(const size_t newElement);
-    void setType(Type newType);
+    void setType(const Type newType);
     void setLeftChild(const size_t newLeftChild);
     void setRightChild(const size_t newRightChild);
     void setId(const size_t newId);
