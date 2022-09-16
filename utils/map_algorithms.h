@@ -29,6 +29,7 @@ namespace MapAlgorithms {
     void addNewTopTrapezoidsSamePointPQ(TrapezoidalMap & map, const std::vector<size_t> &intersected, std::vector<size_t> &upper, const size_t point1Id, const size_t point2Id, const size_t segmentId);
 
     size_t findRealLeft(TrapezoidalMap & map, const size_t point, const cg3::Segment2d& segment);
+    void followSegment(TrapezoidalMap &map, const cg3::Segment2d segment, std::vector<size_t>& intersected);
 
 }
 

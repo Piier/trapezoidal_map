@@ -29,7 +29,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
         else{
             std::vector<size_t> intersected = std::vector<size_t>();
             intersected.push_back(t1);
-            AlgorithmsUtils::followSegment(map, tempSegment, intersected);
+            followSegment(map, tempSegment, intersected);
             differentTrapezoidSamePointPQ(map, dag, intersected, tempSegment);
         }
     }
@@ -43,7 +43,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
         }else{
             std::vector<size_t> intersected = std::vector<size_t>();
             intersected.push_back(t1);
-            AlgorithmsUtils::followSegment(map, tempSegment, intersected);
+            followSegment(map, tempSegment, intersected);
             differentTrapezoidSamePointQ(map, dag, intersected, tempSegment);
         }
     }
@@ -56,7 +56,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
         }else{//Different trapezoid
             std::vector<size_t> intersected = std::vector<size_t>();
             intersected.push_back(t1);
-            AlgorithmsUtils::followSegment(map, tempSegment, intersected);
+            followSegment(map, tempSegment, intersected);
             differentTrapezoidSamePointP(map, dag, intersected, tempSegment);
         }
 
@@ -70,7 +70,7 @@ void addSegmentToMap(TrapezoidalMap &map, Dag &dag, const cg3::Segment2d &segmen
     if(t1!=t2 && !samePointP1 && !samePointP2){
             std::vector<size_t> intersected = std::vector<size_t>();
             intersected.push_back(t1);
-            AlgorithmsUtils::followSegment(map, tempSegment, intersected);
+            followSegment(map, tempSegment, intersected);
             differentTrapezoid(map, dag, intersected, tempSegment);
         }
 
@@ -1148,6 +1148,27 @@ size_t findRealLeft(TrapezoidalMap & map, const size_t point, const cg3::Segment
     }
 
     return SIZE_MAX;
+}
+
+
+/**
+ * @brief followSegment Return a list of trapezoid intersected by the segment s.
+ * @param map The map
+ * @param segment The segment
+ * @param intersected The vector (it must contain the starting trapezoid) that will contain the trapezoids
+ */
+void followSegment(TrapezoidalMap &map, const cg3::Segment2d segment, std::vector<size_t>& intersected){
+    size_t i = 0;
+
+    while(segment.p2().x()>map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()).x()){
+       if(AlgorithmsUtils::isPointOnTheLeft(segment.p1(), segment.p2(), map.getPointByPosition(map.getTrapezoidByPosition(intersected[i]).getRight()))){
+            intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjBottomRight());
+        }else{
+            intersected.push_back(map.getTrapezoidByPosition(intersected[i]).getAdjTopRight());
+        }
+        i++;
+
+    }
 }
 
 }
